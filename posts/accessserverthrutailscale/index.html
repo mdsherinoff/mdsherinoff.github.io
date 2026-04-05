@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<title>Puny Human&#39;s Attempt At Being a Web Landlord</title>
+<script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><title>How I Access my Proxmox Server from Anywhere using Tailscale | Puny Human&#39;s Attempt At Being a Web Landlord</title>
 <meta charset="utf-8">
 <meta name="generator" content="Hugo 0.160.0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
-<link rel="stylesheet" href="https://mdsherinoff.github.io/css/index.css">
-<link rel="stylesheet" href="https://mdsherinoff.github.io/PT-Sans/index.css">
-<link rel="canonical" href="https://mdsherinoff.github.io/posts/accessserverthrutailscale/">
+<link rel="stylesheet" href="http://localhost:1313/css/index.css">
+<link rel="stylesheet" href="http://localhost:1313/PT-Sans/index.css">
+<link rel="canonical" href="http://localhost:1313/posts/accessserverthrutailscale/">
 <link rel="alternate" type="application/rss+xml" href="" title="Puny Human&#39;s Attempt At Being a Web Landlord">
 
 
 <header class="hover">
-  <h1 class=""><a href="https://mdsherinoff.github.io/">Puny Human&#39;s Attempt At Being a Web Landlord</a></h1>
+  <h1 class=""><a href="http://localhost:1313/">Puny Human&#39;s Attempt At Being a Web Landlord</a></h1>
   
   
     
@@ -24,11 +24,10 @@
 
 <article>
   <header class="meta">
-    <h1><a href="/posts/accessserverthrutailscale/"></a></h1>
-    
+    <h1><a href="/posts/accessserverthrutailscale/">How I Access my Proxmox Server from Anywhere using Tailscale</a></h1>
+    <time datetime="2026-04-05T12:40:24&#43;03:00">April 05, 2026</time>
   </header>
-  <h1 id="how-i-access-my-proxmox-server-from-anywhere-using-tailscale">How I Access my Proxmox Server from Anywhere using Tailscale</h1>
-<p>I started by creating an Ubuntu container inside my Proxmox Environment. I usually make the container ID the same as my static IP address I have determined for this container, so as to easily navigate. Don&rsquo;t start your container yet.</p>
+  <p>I started by creating an Ubuntu container inside my Proxmox Environment. I usually make the container ID the same as my static IP address I have determined for this container, so as to easily navigate. Don&rsquo;t start your container yet.</p>
 <p>After the container is setup, I went to the host kernel into its:</p>
 <pre tabindex="0"><code>vi /etc/pve/lxc/{container ID}.conf
 </code></pre><p>In there using the vi editor, I added a couple of lines:</p>
@@ -51,7 +50,7 @@ apt install curl
 </article>
 
 
-<footer class="nowrap"><a class="dark" href="/posts/accesshomenetwork/">« </a> <span></span></footer>
+<footer class="nowrap"><a class="dark" href="/posts/accesshomenetwork/">« How I Access my home network from anywhere in the world</a>  <a class="dark" href="/posts/myfirstpost/">My First Post »</a></footer>
 
 
 </html>
