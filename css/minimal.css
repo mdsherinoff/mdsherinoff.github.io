@@ -1,0 +1,144 @@
+body {
+  font: 16px/1.6 "PT Sans", system-ui, sans-serif;
+  font-size: calc(0.8rem + 0.2vw);
+  background: light-dark(hsl(230, 18%, 100%), hsl(230, 18%, 16%));
+  color: light-dark(hsl(230, 18%, 6%), hsl(230, 18%, 100%));
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  color: light-dark(#46f, #38f);
+  text-decoration: inherit;
+  transition: 0.25s;
+}
+article a:hover {
+  text-decoration: underline;
+}
+header a, footer a, aside a {
+  color: inherit;
+}
+
+hr {
+  border: 1px solid rgb(131.32, 134.38, 149.68);
+  margin: 2em 0;
+}
+
+blockquote {
+  background: rgba(131.32, 134.38, 149.68, 0.1);
+  color: light-dark(#555, #eee);
+  border-left: 3px solid rgba(131.32, 134.38, 149.68, 0.6);
+  padding: 1px 1.5em;
+}
+
+blockquote, figure {
+  margin: 1.25em 0;
+}
+
+img {
+  margin: 0.5em 0;
+  border-radius: 4px;
+  max-width: 100%;
+}
+
+li {
+  margin: 0.3em 0;
+}
+
+table {
+  display: inline-block;
+  max-width: 100%;
+  overflow-y: auto;
+  border-collapse: collapse;
+  border-radius: 2px;
+}
+
+th, td {
+  padding: 0.5em 1em;
+  border: 1px solid rgba(131.32, 134.38, 149.68, 0.24);
+}
+
+thead, tr:hover {
+  background: rgba(131.32, 134.38, 149.68, 0.12);
+}
+
+pre {
+  font-size: 0.8em;
+  background: hsl(230, 18%, 22%)!important;
+  color: hsl(230, 18%, 100%);
+  border-radius: 4px;
+  margin: 1.5em 0;
+  padding: 0.8em 1.2em;
+  overflow-x: auto;
+}
+
+code:not(pre code) {
+  font-size: 0.9em;
+  background: rgba(131.32, 134.38, 149.68, 0.16);
+  border-radius: 3px;
+  margin: 0 0.1em;
+  padding: 0.2em 0.4em;
+  opacity: 0.75;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+body > header, body > footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.75em;
+  margin: 0;
+}
+body > header h1 {
+  font-size: 1.35em;
+}
+
+nav {
+  margin: 0.5em -1.3em;
+}
+nav a {
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 1.3em;
+}
+nav svg {
+  font-size: 1.1em;
+  vertical-align: sub;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+article {
+  flex-grow: 1;
+}
+
+.full {
+  font-size: 1.5em;
+  width: 100%;
+  margin: 0.1em 0 0.7em;
+}
+
+body {
+  padding: 1em calc(40% - 16em);
+}
+body > * {
+  margin: 1em 1.5em;
+}
+header a:hover, footer a:hover {
+  color: #f08;
+  text-decoration: inherit;
+}

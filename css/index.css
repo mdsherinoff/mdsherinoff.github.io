@@ -1,0 +1,219 @@
+body {
+  font: 16px/1.6 "PT Sans", system-ui, sans-serif;
+  font-size: calc(0.8rem + 0.2vw);
+  background: light-dark(hsl(230, 18%, 100%), hsl(230, 18%, 16%));
+  color: light-dark(hsl(230, 18%, 6%), hsl(230, 18%, 100%));
+}
+
+p {
+  text-align: justify;
+}
+
+a {
+  color: light-dark(#46f, #38f);
+  text-decoration: inherit;
+  transition: 0.25s;
+  border-radius: 5px;
+}
+article a:hover {
+  text-decoration: underline;
+}
+header a, footer a, aside a {
+  color: inherit;
+}
+
+hr {
+  border: 1px solid rgb(131.32, 134.38, 149.68);
+  margin: 2em 0;
+}
+
+blockquote {
+  background: rgba(131.32, 134.38, 149.68, 0.1);
+  color: light-dark(#555, #eee);
+  border-left: 3px solid rgba(131.32, 134.38, 149.68, 0.6);
+  padding: 1px 1.5em;
+}
+
+blockquote, figure {
+  margin: 1.25em 0;
+}
+
+img {
+  margin: 0.5em 0;
+  border-radius: 4px;
+  max-width: 100%;
+}
+
+li {
+  margin: 0.3em 0;
+}
+
+table {
+  display: inline-block;
+  max-width: 100%;
+  overflow-y: auto;
+  border-collapse: collapse;
+  border-radius: 2px;
+}
+
+th, td {
+  padding: 0.5em 1em;
+  border: 1px solid rgba(131.32, 134.38, 149.68, 0.24);
+}
+
+thead, tr:hover {
+  background: rgba(131.32, 134.38, 149.68, 0.12);
+}
+
+pre {
+  font-size: 0.8em;
+  background: hsl(230, 18%, 22%)!important;
+  color: hsl(230, 18%, 100%);
+  border-radius: 5px;
+  margin: 1.5em 0;
+  padding: 0.8em 1.2em;
+  overflow-x: auto;
+}
+
+code:not(pre code) {
+  font-size: 0.9em;
+  background: rgba(131.32, 134.38, 149.68, 0.22);
+  border-radius: 3px;
+  margin: 0 0.1em;
+  padding: 0.2em 0.4em;
+  opacity: 0.75;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+body > header, body > footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.75em;
+  margin: 0;
+}
+body > header h1 {
+  font-size: 1.35em;
+}
+
+nav {
+  margin: 0.5em -1.3em;
+}
+nav a {
+  font-weight: bold;
+  display: inline-block;
+  margin: 0 1.3em;
+}
+nav svg {
+  font-size: 1.1em;
+  vertical-align: sub;
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+article {
+  flex-grow: 1;
+}
+article footer {
+  padding: 1em 0;
+}
+
+.nowrap {
+  flex-wrap: nowrap;
+}
+
+.archive, .hover {
+  -webkit-font-smoothing: antialiased;
+}
+
+.meta time {
+  color: rgb(131.32, 134.38, 149.68);
+}
+
+.full {
+  font-size: 1.5em;
+  width: 100%;
+  margin: 0.1em 0 0.7em;
+}
+
+.hover a {
+  box-shadow: 0 2px transparent;
+  border-radius: 0;
+}
+.hover a:hover {
+  box-shadow: 0 2px;
+}
+.hover nav:has(svg) a:hover {
+  color: rgb(131.32, 134.38, 149.68);
+  box-shadow: none;
+}
+
+.button {
+  background: #46f;
+  color: #fff;
+  padding: 0.5em 1em;
+}
+.button:hover {
+  background: hsl(230, 18%, 20%);
+  text-decoration: inherit;
+}
+
+.dark {
+  background: light-dark(rgba(131.32, 134.38, 149.68, 0.2), rgba(131.32, 134.38, 149.68, 0.1));
+  padding: 0.4em 0.8em;
+}
+.dark:hover {
+  background: rgba(131.32, 134.38, 149.68, 0.4);
+}
+
+.archive {
+  font-size: 1.1em;
+  list-style-type: none;
+  padding: 1px 0;
+}
+.archive li {
+  margin: 0.5em 0;
+}
+.archive a:not(:hover) {
+  color: inherit;
+}
+.archive a:hover {
+  text-decoration: inherit;
+}
+
+.katex-display {
+  overflow: auto hidden;
+}
+
+body {
+  background: hsl(230, 18%, 93%);
+  background: light-dark(hsl(230, 18%, 93%), hsl(230, 18%, 16%));
+  padding: 0 calc(38% - 22rem);
+}
+
+body > * {
+  background: hsl(230, 18%, 100%);
+  background: light-dark(hsl(230, 18%, 100%), hsl(230, 18%, 16%));
+  color: light-dark(hsl(230, 18%, 0%), hsl(230, 18%, 100%));
+  padding: 1.75em calc(22% - 6rem);
+  padding: clamp(1.5em, 4vw, 1.75em) max(1.5em, 22% - 6rem);
+  box-shadow: 0 -1px rgba(131.32, 134.38, 149.68, 0.1) inset, 0 0 1em light-dark(rgba(131.32, 134.38, 149.68, 0.1), transparent), 0 0 0 1px light-dark(transparent, hsl(230, 18%, 26%));
+}
+
+body > header, body > footer {
+  background: hsl(230, 18%, 20%);
+  background: light-dark(hsl(230, 18%, 20%), hsl(230, 18%, 16%));
+  color: hsl(230, 18%, 100%);
+}
