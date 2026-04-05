@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<title>Puny Human&#39;s Attempt At Being a Web Landlord</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.160.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://mdsherinoff.github.io/css/index.css">
+<link rel="stylesheet" href="https://mdsherinoff.github.io/PT-Sans/index.css">
+<link rel="canonical" href="https://mdsherinoff.github.io/posts/accessserverthrutailscale/">
+<link rel="alternate" type="application/rss+xml" href="" title="Puny Human&#39;s Attempt At Being a Web Landlord">
+
+
+<header class="hover">
+  <h1 class=""><a href="https://mdsherinoff.github.io/">Puny Human&#39;s Attempt At Being a Web Landlord</a></h1>
+  
+  
+    
+      
+    
+  
+  
+</header>
+
+<article>
+  <header class="meta">
+    <h1><a href="/posts/accessserverthrutailscale/"></a></h1>
+    
+  </header>
+  <h1 id="how-i-access-my-proxmox-server-from-anywhere-using-tailscale">How I Access my Proxmox Server from Anywhere using Tailscale</h1>
+<p>I started by creating an Ubuntu container inside my Proxmox Environment. I usually make the container ID the same as my static IP address I have determined for this container, so as to easily navigate. Don&rsquo;t start your container yet.</p>
+<p>After the container is setup, I went to the host kernel into its:</p>
+<pre tabindex="0"><code>vi /etc/pve/lxc/{container ID}.conf
+</code></pre><p>In there using the vi editor, I added a couple of lines:</p>
+<pre tabindex="0"><code>lxc.cgroup2.devices.allow: c 10:200 rwm
+lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
+</code></pre><p>Exit from the vi editor and now start your container.</p>
+<p>Open the container&rsquo;s console and update, upgrade and then install curl:</p>
+<pre tabindex="0"><code>apt update
+apt upgrade
+apt install curl
+</code></pre><p>Now install Tailscale onto your device through the console, find the link to install onto device from:</p>
+<pre tabindex="0"><code>https://tailscale.com/download
+</code></pre><p>OR use this:</p>
+<pre tabindex="0"><code>curl -fsSL https://tailscale.com/install.sh | sh
+</code></pre><p>Use the linux curl provided, once Tailscale installation is completed, type in</p>
+<pre tabindex="0"><code>tailscale up --ssh
+</code></pre><p>You will receive a link provided, use the provided link to go to the Tailscale website and setup your account. Once completed install Tailscale on your desired device be it mobile or laptop.</p>
+<p>And VOILA now you can access your Proxmox Server from anywhere in the world.</p>
+
+</article>
+
+
+<footer class="nowrap"><a class="dark" href="/posts/accesshomenetwork/">« </a> <span></span></footer>
+
+
+</html>

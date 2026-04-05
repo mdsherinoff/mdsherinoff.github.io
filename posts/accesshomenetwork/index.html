@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<title>Puny Human&#39;s Attempt At Being a Web Landlord</title>
+<meta charset="utf-8">
+<meta name="generator" content="Hugo 0.160.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://mdsherinoff.github.io/css/index.css">
+<link rel="stylesheet" href="https://mdsherinoff.github.io/PT-Sans/index.css">
+<link rel="canonical" href="https://mdsherinoff.github.io/posts/accesshomenetwork/">
+<link rel="alternate" type="application/rss+xml" href="" title="Puny Human&#39;s Attempt At Being a Web Landlord">
+
+
+<header class="hover">
+  <h1 class=""><a href="https://mdsherinoff.github.io/">Puny Human&#39;s Attempt At Being a Web Landlord</a></h1>
+  
+  
+    
+      
+    
+  
+  
+</header>
+
+<article>
+  <header class="meta">
+    <h1><a href="/posts/accesshomenetwork/"></a></h1>
+    
+  </header>
+  <p>#How I Access my home network from anywhere in the world.
+First setup Tailscale, follow my short and simple guide here:</p>
+<pre tabindex="0"><code>Link here
+</code></pre><p>After you are done with that, go into your Tailscale container&rsquo;s console and type in:</p>
+<pre tabindex="0"><code>sudo sysctl -w net.ipv4.ip_forward=1
+</code></pre><pre tabindex="0"><code>echo &#34;net.ipv4.ip_forward=1&#34; | sudo tee -a /etc/sysctl.conf
+</code></pre><p>Verify it by:</p>
+<pre tabindex="0"><code>sysctl net.ipv4.ip_forward
+</code></pre><p>It should show:</p>
+<pre tabindex="0"><code>net.ipv4.ip_forward = 1
+</code></pre><p>Start Tailscale again by:</p>
+<pre tabindex="0"><code>sudo tailscale up --advertise-routes={your subnet} --ssh
+</code></pre><pre tabindex="0"><code>ex: sudo tailscale up --advertise-routes=192.168.1.0/24 --ssh
+</code></pre><p>After that part is completed go into Tailscale admin panel, find your container in there and enable subnet routes.</p>
+
+</article>
+
+
+<footer class="nowrap"><a class="dark" href="/posts/myfirstpost/">« My First Post</a>  <a class="dark" href="/posts/accessserverthrutailscale/"> »</a></footer>
+
+
+</html>
