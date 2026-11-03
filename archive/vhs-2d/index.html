@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohammed Sherin Valiyakath</title>
+<meta name="description" content="Mohammed Sherin Valiyakath — Computer Science at Qatar University. Software, backend and civic-tech. Pick a tape.">
+<meta property="og:title" content="Mohammed Sherin Valiyakath">
+<meta property="og:description" content="CS @ Qatar University. Pick a tape, put it in the VCR.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 40'%3E%3Crect width='64' height='40' rx='3' fill='%23161616'/%3E%3Crect x='6' y='6' width='52' height='16' rx='2' fill='%23efe7d2'/%3E%3Ccircle cx='20' cy='30' r='5' fill='%23f7b801'/%3E%3Ccircle cx='44' cy='30' r='5' fill='%23f7b801'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Permanent+Marker&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<main class="room" id="room">
+  <div class="lamp" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="pennant" aria-hidden="true"><div class="pennant__felt">visca barça</div></div>
+
+  <header class="note">
+    <span class="masking masking--l" aria-hidden="true"></span>
+    <span class="masking masking--r" aria-hidden="true"></span>
+    <h1>Mohammed Sherin<br>Valiyakath</h1>
+    <p class="note__sub">CS @ Qatar University · Doha</p>
+    <p class="note__hint">pick a tape, put it in the VCR <span class="arrow" aria-hidden="true">↘</span></p>
+  </header>
+
+  <div class="stage">
+    <div class="tapes" aria-label="Tapes">
+      <div class="stack stack--a">
+        <div class="tape-slot"><button class="tape tape--sleeve tape--red" data-tape="contact"><span class="label">contact</span><span class="spine-print">T-30</span></button></div>
+        <div class="tape-slot"><button class="tape" data-tape="education"><span class="label">EDUCATION &mdash; QU</span><span class="spine-print">T-120 HG</span></button></div>
+        <div class="tape-slot"><button class="tape tape--sleeve tape--mustard" data-tape="projects"><span class="label">PROJECTS!!</span><span class="spine-print">E-180</span></button></div>
+        <div class="tape-slot"><button class="tape" data-tape="experience"><span class="label">WORK '25 &ndash; '26</span><span class="spine-print">T-120 HG</span></button></div>
+      </div>
+      <div class="stack stack--b">
+        <div class="tape-slot"><button class="tape tape--sleeve tape--teal" data-tape="misc"><span class="label">home videos (misc)</span><span class="spine-print">T-60</span></button></div>
+        <div class="tape-slot"><button class="tape tape--rewind" data-tape="about"><span class="label">ABOUT ME</span><span class="spine-print">T-120 HG</span></button></div>
+      </div>
+    </div>
+
+    <div class="tv" id="tv">
+      <div class="tv__bezel">
+        <div class="screen" id="screen" data-state="idle">
+          <div class="screen__blue" aria-hidden="true">
+            <span class="osd osd--tr">VIDEO 1</span>
+            <span class="insert">INSERT TAPE<span class="blink">_</span></span>
+          </div>
+          <canvas class="screen__snow" id="snow" width="160" height="120" aria-hidden="true"></canvas>
+          <div class="screen__play" id="play" tabindex="-1" aria-live="polite"></div>
+          <div class="osd-layer" aria-hidden="true">
+            <span class="osd osd--tl" id="osdMode">▶ PLAY</span>
+            <span class="osd osd--tr">SP</span>
+            <span class="osd osd--bl" id="osdCounter">0:00:00</span>
+          </div>
+          <div class="screen__fx" aria-hidden="true"></div>
+          <button class="zoom" id="zoom" aria-label="Fill the window with the screen" title="bigger">⤢</button>
+        </div>
+      </div>
+      <div class="tv__panel">
+        <div class="brand">
+          <span class="brand__name">SHERINVISION</span>
+          <span class="brand__model">TVR-2027 · 4 HEAD HI-FI</span>
+        </div>
+        <div class="deck">
+          <div class="slot" id="slot"><span class="slot__flap" id="flap"></span></div>
+          <div class="vfd" aria-hidden="true"><span id="vfd">--:--</span></div>
+        </div>
+        <div class="controls">
+          <button class="key" id="btnRew" aria-label="Rewind (scroll up)">◀◀</button>
+          <button class="key" id="btnFf" aria-label="Fast forward (scroll down)">▶▶</button>
+          <button class="key key--eject" id="btnEject" aria-label="Eject tape">⏏</button>
+          <button class="key key--small" id="btnSound" aria-pressed="true" aria-label="Sound">♪</button>
+          <span class="led" id="led" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="tv__feet" aria-hidden="true"><span></span><span></span></div>
+    </div>
+  </div>
+
+  <div class="table" aria-hidden="true">
+    <div class="table__top"></div>
+    <div class="table__edge"></div>
+    <div class="table__leg table__leg--l"></div>
+    <div class="table__leg table__leg--r"></div>
+  </div>
+
+  <p class="boring"><a href="#plain" id="plainLink">no time for tapes? read it as plain text ↓</a></p>
+</main>
+
+<section class="plain" id="plain" aria-label="Plain text version">
+  <div class="plain__inner" id="plainInner"></div>
+  <p class="plain__foot">Be kind, rewind. <a href="#room">Back to the tapes ↑</a></p>
+</section>
+
+
+<!-- ===================== TAPE CONTENTS ===================== -->
+
+<template id="tape-about">
+  <section class="tape-doc" data-title="About me">
+    <header class="card">
+      <p class="card__kicker">REC ▪ DOHA ▪ 2026</p>
+      <h2 class="card__title">Mohammed Sherin Valiyakath</h2>
+      <p class="card__sub">final-year computer science, Qatar University</p>
+    </header>
+
+    <p class="lead">I'm a CS student in Doha, graduating May 2027. Most of what I build starts with something that annoyed me.</p>
+    <p>Nobody was keeping a record of what Kerala's ministers say in public, so I built <a href="https://openministry.live" target="_blank" rel="noopener">openMinistry</a>. Raycast had nothing for typing Malayalam, so I wrote an extension for it. Some films only survive on Telegram now, so I wrote a userbot that pulls them into my Jellyfin server.</p>
+    <p>I've also done the less glamorous side: fixing network faults on-site at supermarkets, and building a CRM in Oracle APEX for a sales team.</p>
+
+    <h3 class="ch">Looking for</h3>
+    <p>A full-time role or internship from <strong>Summer 2027</strong>. Software engineering, backend, or anything close to civic tech.</p>
+
+    <h3 class="ch">What I work with</h3>
+    <dl class="kv">
+      <dt>Languages</dt><dd>Python, TypeScript, JavaScript, Java, SQL, C#</dd>
+      <dt>Web</dt><dd>Next.js, React, FastAPI, Tailwind</dd>
+      <dt>Data</dt><dd>PostgreSQL, Redis, Celery, Oracle Database / APEX</dd>
+      <dt>Ops</dt><dd>Docker, Linux, Git, DigitalOcean, RabbitMQ, Kafka</dd>
+      <dt>Networks</dt><dd>CCNA: Introduction to Networks, Cisco Packet Tracer</dd>
+    </dl>
+
+    <h3 class="ch">Spoken</h3>
+    <p>Malayalam (native), English (fluent), and beginner Hindi, Tamil and Spanish.</p>
+
+    <p class="next">Next tape: <button class="jump" data-goto="projects">PROJECTS!!</button> or <button class="jump" data-goto="experience">WORK</button></p>
+  </section>
+</template>
+
+<template id="tape-experience">
+  <section class="tape-doc" data-title="Work">
+    <header class="card">
+      <p class="card__kicker">REC ▪ DEC 2025 → NOW</p>
+      <h2 class="card__title">Work</h2>
+      <p class="card__sub">three jobs, all in Doha</p>
+    </header>
+
+    <article class="entry">
+      <p class="entry__when">SEP 2026 — PRESENT</p>
+      <h3 class="entry__title">Kings Marine <span>Web Development Consultant</span></h3>
+      <ul>
+        <li>Advise management on the company's online presence: scope the requests, rank them, and lay out the options and trade-offs before anything gets built.</li>
+        <li>Leading the redesign of the WordPress site and fixing up the online shop so browsing and checking out is less painful.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">JUN 2026 — AUG 2026</p>
+      <h3 class="entry__title">Mannai InfoTech <span>Software Developer Intern</span></h3>
+      <ul>
+        <li>Built a Sales Pipeline CRM on Oracle APEX and Oracle Database: leads, opportunities, activity logging, so the sales team had one view of the pipeline.</li>
+        <li>Designed the dashboards and sales-funnel analytics to track conversion by stage, plus role-based security and automated follow-up reminders.</li>
+        <li>Wired a FastAPI service with RabbitMQ and Kafka into APEX for messaging and API integration.</li>
+      </ul>
+      <p class="tags">Oracle APEX · SQL · FastAPI · RabbitMQ · Kafka</p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">DEC 2025 — JAN 2026</p>
+      <h3 class="entry__title">Simple Logic <span>Networks / IT Support Intern</span></h3>
+      <ul>
+        <li>Supported network infrastructure and day-to-day IT for 9 Safari Supermarket outlets and malls across Qatar.</li>
+        <li>Diagnosed and fixed hardware and connectivity faults on-site, so fewer of them had to be escalated.</li>
+        <li>Learned how retail management software actually runs inside a store.</li>
+      </ul>
+      <p class="tags">Networking · Hardware · Retail systems</p>
+    </article>
+
+    <p class="next">Also worked a till during the Arab Cup. That's on <button class="jump" data-goto="misc">home videos</button>.</p>
+  </section>
+</template>
+
+<template id="tape-projects">
+  <section class="tape-doc" data-title="Projects">
+    <header class="card">
+      <p class="card__kicker">REC ▪ FEATURE PRESENTATIONS</p>
+      <h2 class="card__title">Projects</h2>
+      <p class="card__sub">the ones I'd actually show you</p>
+    </header>
+
+    <article class="entry">
+      <p class="entry__when">CH.01 · FOUNDER · CIVIC TECH</p>
+      <h3 class="entry__title">openMinistry</h3>
+      <p>A public archive of what Kerala's ministers and MLAs say on the record. It scrapes the news, uses an LLM to pull out each statement, puts it in front of a human moderator, and then publishes it to a searchable site and a public REST API.</p>
+      <ul>
+        <li>600+ verified statements from 140 public representatives.</li>
+        <li>Microservices: FastAPI backend, Next.js frontend, a separate extraction service, and Celery workers on Redis. Deployed on DigitalOcean with Docker and PostgreSQL.</li>
+        <li>The full platform is offline for now because hosting costs money. The demo is still up.</li>
+      </ul>
+      <p class="tags">Python · FastAPI · Next.js · PostgreSQL · Redis · Celery · Docker</p>
+      <p class="links"><a href="https://openministry.live" target="_blank" rel="noopener">openministry.live ↗</a> <a href="https://github.com/mdsherinoff/openMinistry" target="_blank" rel="noopener">source ↗</a></p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">CH.02 · FOUNDER · IN DEVELOPMENT</p>
+      <h3 class="entry__title">ComplyQatar</h3>
+      <p>A multi-tenant app for companies in Qatar to track their licences, permits and contracts by location: red / amber / green status, renewal alerts, and a vault for the documents. Freemium, so small businesses can start free. First rollout is planned with Transind Holding.</p>
+      <p class="tags">Next.js · TypeScript · Supabase / Postgres · Drizzle · row-level security</p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">CH.03 · AUTOMATION</p>
+      <h3 class="entry__title">telefin</h3>
+      <p>Forward a film to yourself on Telegram and it turns up in Jellyfin. It's a Telegram userbot (Telethon, MTProto) rather than a bot, which gets around the 20 MB bot limit and handles files up to 4 GB. It hands the file to Sonarr/Radarr, and they do the rest.</p>
+      <p class="tags">Python · Telethon · Docker · Sonarr / Radarr / Jellyfin</p>
+      <p class="links"><a href="https://github.com/mdsherinoff/telefin" target="_blank" rel="noopener">source ↗</a></p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">CH.04 · PUBLISHED ON THE RAYCAST STORE</p>
+      <h3 class="entry__title">Manglish Keyboard</h3>
+      <p>Type <em>namaskaram</em>, get <span lang="ml">നമസ്കാരം</span>. A Raycast extension that turns English phonetics into Malayalam script, with copy/paste straight into the app you're in and a history of recent words. It went through Raycast's store review.</p>
+      <p class="tags">TypeScript · React · Raycast API · Google Input Tools</p>
+      <p class="links"><a href="https://github.com/mdsherinoff/manglish-keyboard" target="_blank" rel="noopener">source ↗</a></p>
+    </article>
+
+    <h3 class="ch">Also on this tape</h3>
+    <ul class="shortlist">
+      <li><a href="https://github.com/mdsherinoff/ringlog" target="_blank" rel="noopener">Ringlog</a> exports iPhone call history from a local backup to Excel, CSV or an HTML report. Offline, Python.</li>
+      <li><a href="https://github.com/mdsherinoff/Jellyfin.Plugin.LanguageSort" target="_blank" rel="noopener">Jellyfin LanguageSort</a> is a C# plugin that groups a library into collections by each title's <em>original</em> language, using TMDb or the script the title is written in.</li>
+      <li><a href="https://bingeplan.vercel.app" target="_blank" rel="noopener">Bingely</a> builds a viewing schedule for films, shows and anime around your free time. Next.js, TMDB, Prisma.</li>
+      <li><a href="https://github.com/mdsherinoff/odins-garden" target="_blank" rel="noopener">Odin's Garden</a> is a Flutter plant diary with photo timelines and a species dictionary built on GBIF.</li>
+      <li><a href="https://github.com/mdsherinoff/cmps350-project" target="_blank" rel="noopener">Course Management System</a> is a uni team project with roles for students, instructors and admins. Next.js, Prisma, NextAuth, Chart.js.</li>
+      <li><strong>Timeflict 3D</strong> is a Unity 6 game made by a team of three. I did the gameplay mechanics and scripted events in C#.</li>
+      <li><a href="https://github.com/mdsherinoff/wc-prediction-game" target="_blank" rel="noopener">World Cup prediction pool</a> is a scoreline and bracket game for a group of friends, with results synced from football-data.org.</li>
+    </ul>
+
+    <p class="next">Everything else is on <a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a></p>
+  </section>
+</template>
+
+<template id="tape-education">
+  <section class="tape-doc" data-title="Education">
+    <header class="card">
+      <p class="card__kicker">REC ▪ JAN 2023 → MAY 2027</p>
+      <h2 class="card__title">Education</h2>
+      <p class="card__sub">Qatar University, Doha</p>
+    </header>
+
+    <article class="entry">
+      <p class="entry__when">JAN 2023 — MAY 2027 (EXPECTED)</p>
+      <h3 class="entry__title">Qatar University <span>BSc Computer Science</span></h3>
+      <p>Final year.</p>
+      <h4 class="sub">Coursework that stuck</h4>
+      <ul class="cols">
+        <li>Object-Oriented Programming (Java)</li>
+        <li>Software Engineering</li>
+        <li>Database Systems</li>
+        <li>Computer Networks</li>
+        <li>Web Development</li>
+        <li>Game Design</li>
+        <li>Project Management</li>
+        <li>Principles of Management</li>
+      </ul>
+      <h4 class="sub">Built for class</h4>
+      <ul>
+        <li>A full-stack course management system for web development (team project, Next.js + PostgreSQL).</li>
+        <li>Timeflict 3D, a Unity game for game design. I owned gameplay mechanics and scripted events.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">JAN 2026</p>
+      <h3 class="entry__title">CCNA: Introduction to Networks <span>Cisco Networking Academy</span></h3>
+    </article>
+  </section>
+</template>
+
+<template id="tape-misc">
+  <section class="tape-doc" data-title="Home videos">
+    <header class="card">
+      <p class="card__kicker">REC ▪ DO NOT TAPE OVER</p>
+      <h2 class="card__title">Home videos</h2>
+      <p class="card__sub">things that aren't on a CV, mostly</p>
+    </header>
+
+    <article class="entry">
+      <p class="entry__when">JUN — JUL 2026</p>
+      <h3 class="entry__title">World Cup 2026 prediction league <span>founder, organiser, and also the admin</span></h3>
+      <p>Built the site and ran a prediction league for 20 friends and family across all 104 matches, with daily reports and charts on the standings. Running it was harder than building it.</p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">DEC 2025</p>
+      <h3 class="entry__title">Monoprix Cafe <span>cashier &amp; acting store lead, part-time</span></h3>
+      <p>Worked the till during the FIFA Arab Cup, and on some shifts ran the whole store. 300–500 customers a day, stock counted, shelves full.</p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">ONGOING</p>
+      <h3 class="entry__title">The home server</h3>
+      <p>A self-hosted Jellyfin stack that a lot of my side projects come from (see <button class="jump" data-goto="projects">telefin and LanguageSort</button>).</p>
+    </article>
+
+    <article class="entry">
+      <p class="entry__when">SOMETIMES</p>
+      <h3 class="entry__title">A blog</h3>
+      <p>Built with Hugo, about things that matter mostly to me. <a href="https://mdsherinoff.github.io" target="_blank" rel="noopener">mdsherinoff.github.io ↗</a></p>
+    </article>
+
+    <p class="sign">Visca el Barça.</p>
+  </section>
+</template>
+
+<template id="tape-contact">
+  <section class="tape-doc" data-title="Contact">
+    <header class="card">
+      <p class="card__kicker">REC ▪ LEAVE A MESSAGE AFTER THE BEEP</p>
+      <h2 class="card__title">Contact</h2>
+      <p class="card__sub">I reply faster than the VCR rewinds</p>
+    </header>
+
+    <ul class="contact">
+      <li><span>email</span><a href="mailto:mohammedsherinofficial@gmail.com">mohammedsherinofficial@gmail.com</a></li>
+      <li><span>linkedin</span><a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">in/mdsherinoff ↗</a></li>
+      <li><span>github</span><a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">mdsherinoff ↗</a></li>
+      <li><span>based in</span>Doha, Qatar</li>
+    </ul>
+    <p>Open to full-time roles and internships from Summer 2027: SWE, backend, civic tech.</p>
+  </section>
+</template>
+
+<script src="main.js"></script>
+</body>
+</html>

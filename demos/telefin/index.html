@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>telefin · simulation</title>
+<style>
+  /* A simulation, not the bot: same rules and message text as telefin
+     (bot.py, worker.py, utils/telegram_helpers.py), nothing is downloaded. */
+  :root { --tg-bg: #0e1621; --tg-panel: #17212b; --tg-in: #182533; --tg-out: #2b5278; --tg-text: #f5f5f5; --tg-dim: #6d7f8f; --tg-link: #6ab3f3;
+          --jf-bg: #101010; --jf-card: #1c1c1c; --jf-accent: #00a4dc; --line: rgba(255,255,255,.07); }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { display: grid; grid-template-columns: minmax(300px, 1fr) minmax(320px, 1.2fr); background: #0a0a0a; color: var(--tg-text); font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  @media (max-width: 720px) { body { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } .server { max-height: 46vh; } }
+
+  /* Telegram side */
+  .tg { display: flex; flex-direction: column; min-height: 0; background: var(--tg-bg); border-right: 1px solid var(--line); }
+  .tg-head { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--tg-panel); }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #5aa7e8, #2d6fb3); font-weight: 600; }
+  .tg-head small { display: block; color: var(--tg-dim); }
+  .chat { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .msg { max-width: 82%; padding: 7px 10px 6px; border-radius: 12px; white-space: pre-wrap; word-break: break-word; }
+  .msg.out { align-self: flex-end; background: var(--tg-out); border-bottom-right-radius: 4px; }
+  .msg.in { align-self: flex-start; background: var(--tg-in); border-bottom-left-radius: 4px; }
+  .msg .fwd { color: var(--tg-link); font-size: 12px; margin-bottom: 4px; }
+  .msg .file { display: flex; gap: 10px; align-items: center; }
+  .msg .file i { width: 40px; height: 40px; border-radius: 50%; background: #4f8fd1; display: grid; place-items: center; font-style: normal; flex: none; }
+  .msg .file small { display: block; color: #b6c7d8; }
+  .msg code { font: 12.5px/1.3 ui-monospace, Menlo, monospace; color: #9ad0ff; }
+  .msg .bar { font-family: ui-monospace, Menlo, monospace; letter-spacing: -1px; }
+  .msg .time { display: block; text-align: right; font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
+  .sys { align-self: center; font-size: 12px; color: var(--tg-dim); background: rgba(0,0,0,.25); padding: 3px 10px; border-radius: 10px; }
+  .tray { padding: 10px; background: var(--tg-panel); border-top: 1px solid var(--line); }
+  .tray p { margin: 0 0 8px; color: var(--tg-dim); font-size: 12px; }
+  .files { display: flex; flex-wrap: wrap; gap: 6px; }
+  .files button, .custom button { border: 1px solid var(--line); background: #22303d; color: var(--tg-text); border-radius: 8px; padding: 6px 9px; font: inherit; font-size: 12.5px; cursor: pointer; }
+  .files button:hover, .custom button:hover { background: #2c3e50; }
+  .files button:disabled { opacity: .45; cursor: default; }
+  .custom { display: flex; gap: 6px; margin-top: 8px; }
+  .custom input { flex: 1; min-width: 0; background: #0e1621; border: 1px solid var(--line); border-radius: 8px; color: var(--tg-text); padding: 6px 9px; font: 12.5px ui-monospace, Menlo, monospace; }
+
+  /* server side */
+  .server { display: flex; flex-direction: column; min-height: 0; background: var(--jf-bg); }
+  .pipe { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px; border-bottom: 1px solid var(--line); }
+  .stage { padding: 10px; border-radius: 8px; background: var(--jf-card); border: 1px solid var(--line); transition: border-color .3s, box-shadow .3s; }
+  .stage b { display: block; font-size: 13px; }
+  .stage small { color: #8a8a8a; }
+  .stage.on { border-color: var(--jf-accent); box-shadow: 0 0 0 1px var(--jf-accent) inset; }
+  .log { flex: 1; overflow-y: auto; margin: 0; padding: 10px 12px; font: 12px/1.55 ui-monospace, Menlo, monospace; color: #a9b4bd; }
+  .log .w { color: #f0b429; } .log .ok { color: #7ee2a8; }
+  .lib { padding: 12px; border-top: 1px solid var(--line); }
+  .lib h3 { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: #ddd; }
+  .row { display: flex; gap: 10px; overflow-x: auto; min-height: 120px; }
+  .poster { flex: none; width: 76px; animation: pop .4s ease; }
+  .poster div { height: 112px; border-radius: 6px; display: grid; place-items: end start; padding: 6px; font-size: 10.5px; font-weight: 600; line-height: 1.15; }
+  .poster span { display: block; margin-top: 4px; font-size: 11px; color: #9a9a9a; }
+  .empty { color: #6b6b6b; font-size: 12px; align-self: center; }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.96); } }
+  .note { position: fixed; right: 10px; bottom: 10px; padding: 5px 9px; border-radius: 6px; background: rgba(0,0,0,.75); color: #ddd; font-size: 11.5px; }
+</style>
+</head>
+<body>
+<section class="tg" aria-label="Telegram chat">
+  <div class="tg-head"><span class="avatar">M</span><div>Media drop<small>you · telefin (userbot) is watching</small></div></div>
+  <div class="chat" id="chat" aria-live="polite"><span class="sys">Forward a file to this chat</span></div>
+  <div class="tray">
+    <p>Forward one of these (public-domain films and made-up episodes), or name your own file:</p>
+    <div class="files" id="files"></div>
+    <form class="custom" id="custom"><input id="fname" placeholder="My.Show.S01E01.mkv" aria-label="File name"><button>Forward</button></form>
+  </div>
+</section>
+<section class="server" aria-label="Media server">
+  <div class="pipe">
+    <div class="stage" id="sTelefin"><b>telefin</b><small>downloads the file</small></div>
+    <div class="stage" id="sArr"><b id="arrName">Sonarr / Radarr</b><small>renames &amp; imports</small></div>
+    <div class="stage" id="sJf"><b>Jellyfin</b><small>shows it in the library</small></div>
+  </div>
+  <pre class="log" id="log"></pre>
+  <div class="lib"><h3>Jellyfin · Recently added</h3><div class="row" id="row"><span class="empty">Nothing yet.</span></div></div>
+</section>
+<span class="note">Simulation · same rules &amp; messages as telefin · nothing is downloaded</span>
+
+<script>
+// ---- straight from telefin ----
+const DEFAULT_EXTENSIONS = [".mkv", ".mp4", ".avi", ".mov", ".wmv", ".flv", ".webm", ".m4v"];
+const isTvShow = (f) => [/s\d{1,2}e\d{1,2}/, /\d{1,2}x\d{1,2}/].some((p) => p.test(f.toLowerCase()));
+const detectMediaType = (f) => (isTvShow(f) ? "tv" : "movie");
+const mediaLabel = (t) => (t === "tv" ? "TV Show" : "Movie");
+function formatSize(n) {
+  if (n === 0) return "0B";
+  const names = ["B", "KB", "MB", "GB", "TB"]; let i = 0, s = n;
+  while (s >= 1024 && i < names.length - 1) { s /= 1024; i++; }
+  return `${s.toFixed(2)} ${names[i]}`;
+}
+const KEEP = [" ", ".", "_", "-", "[", "]", "(", ")"];
+const sanitizeFilename = (f) => [...f].filter((c) => /[\p{L}\p{N}]/u.test(c) || KEEP.includes(c)).join("").trim() || "unknown_file";
+const formatSpeed = (b) => `${formatSize(Math.floor(b))}/s`;
+function makeProgressBar(f, width = 16) {
+  f = Math.max(0, Math.min(1, f));
+  const filled = Math.round(f * width);
+  return "[" + "█".repeat(filled) + "░".repeat(width - filled) + "]";
+}
+// --------------------------------
+
+const FILES = [
+  ["Nosferatu.1922.1080p.mkv", 2.1e9],
+  ["Sherlock.Jr.1924.mp4", 1.3e9],
+  ["Night.of.the.Living.Dead.1968.mkv", 3.4e9],
+  ["Kerala.Kitchen.S02E05.mkv", 6.8e8],
+  ["Backwater.Diaries.1x03.mp4", 5.2e8],
+  ["subtitles_and_notes.pdf", 2.4e5],
+];
+const $ = (id) => document.getElementById(id);
+const chat = $("chat"), log = $("log"), row = $("row");
+const done = new Map();          // safe filename -> size (find_completed_duplicate)
+let busy = false;
+
+const now = () => new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+const stamp = () => new Date().toISOString().replace("T", " ").slice(0, 19);
+const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const md = (s) => esc(s).replace(/`([^`]+)`/g, "<code>$1</code>").replace(/(\[[█░]+\])/, '<span class="bar">$1</span>');
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function logLine(text, cls = "") {
+  log.insertAdjacentHTML("beforeend", `<span class="${cls}">${stamp()} ${esc(text)}</span>\n`);
+  log.scrollTop = log.scrollHeight;
+}
+function bubble(cls, html) {
+  const el = document.createElement("div");
+  el.className = `msg ${cls}`;
+  el.innerHTML = html + `<span class="time">${now()}</span>`;
+  chat.appendChild(el); chat.scrollTop = chat.scrollHeight;
+  return { edit(text) { el.innerHTML = md(text) + `<span class="time">${now()}</span>`; chat.scrollTop = chat.scrollHeight; } };
+}
+const stage = (id) => ["sTelefin", "sArr", "sJf"].forEach((s) => $(s).classList.toggle("on", s === id));
+
+function posterColor(name) { let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 360; return `hsl(${h} 35% 32%)`; }
+
+async function forward(filename, size) {
+  if (busy) return;
+  busy = true; setTray(false);
+  bubble("out", `<div class="fwd">Forwarded from Saved Messages</div><div class="file"><i>▶</i><div>${esc(filename)}<small>${formatSize(size)}</small></div></div>`);
+  await sleep(500);
+
+  const ext = (filename.match(/\.[^.]+$/)?.[0] || "").toLowerCase();
+  if (!DEFAULT_EXTENSIONS.includes(ext)) {
+    bubble("in", md(`Unsupported file type: \`${ext || "(none)"}\`\n\nAllowed: ${[...DEFAULT_EXTENSIONS].sort().join(", ")}`));
+    logLine(`Rejected ${filename}: unsupported extension ${ext || "(none)"}`, "w");
+    return finish();
+  }
+
+  const type = detectMediaType(filename);
+  const safe = sanitizeFilename(filename);
+  const dir = "/srv/media/incoming";
+  if (done.get(safe) === size) {
+    bubble("in", md(`↩\`${filename}\` was already downloaded, skipping.`));
+    logLine(`Skipped duplicate ${safe}`);
+    return finish();
+  }
+
+  const status = bubble("in", md(`Queued \`${filename}\``));
+  logLine(`Queued ${safe} (${mediaLabel(type)}, ${formatSize(size)})`);
+  stage("sTelefin");
+  await sleep(700);
+  status.edit(`⬇️ Downloading \`${filename}\`...`);
+
+  const speed = 38e6 + Math.random() * 30e6;  // simulated transfer speed
+  const steps = 14;
+  for (let i = 1; i <= steps; i++) {
+    await sleep(260);
+    const cur = Math.min(size, Math.round((size * i) / steps));
+    status.edit(`⬇️ Downloading \`${filename}\`\n\n${makeProgressBar(cur / size)} ${Math.floor((cur / size) * 100)}%\n${formatSize(cur)} / ${formatSize(size)} • ${formatSpeed(speed)}`);
+  }
+  logLine(`Downloaded ${safe} → ${dir}/${safe}`);
+
+  const arr = type === "tv" ? "Sonarr" : "Radarr";
+  $("arrName").textContent = arr;
+  stage("sArr");
+  logLine(`POST ${arr.toLowerCase()}/api/v3/command ${type === "tv" ? "DownloadedEpisodesScan" : "DownloadedMoviesScan"}`);
+  await sleep(700);
+  status.edit(`✅ Download complete\n\nType: ${mediaLabel(type)}\nFile: \`${filename}\`\nSize: ${formatSize(size)}\nPath: \`${dir}/${safe}\`\n\n${arr} notified`);
+  logLine(`${arr} notified`, "ok");
+  done.set(safe, size);
+
+  await sleep(900);
+  stage("sJf");
+  logLine(`Import confirmed by ${arr}; Jellyfin library scan picked it up`, "ok");
+  const title = filename.replace(/\.[^.]+$/, "").replace(/\.(1080p|720p)/i, "").replace(/[._]/g, " ");
+  row.querySelector(".empty")?.remove();
+  row.insertAdjacentHTML("afterbegin", `<div class="poster"><div style="background:linear-gradient(160deg, ${posterColor(title)}, #111)">${esc(title)}</div><span>${mediaLabel(type)}</span></div>`);
+  await sleep(600);
+  stage(null);
+  finish();
+}
+
+function finish() { busy = false; setTray(true); }
+function setTray(on) { document.querySelectorAll("#files button, #custom button").forEach((b) => (b.disabled = !on)); }
+
+$("files").innerHTML = FILES.map(([n, s], i) => `<button data-i="${i}">${esc(n)}</button>`).join("");
+$("files").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) forward(...FILES[+b.dataset.i]); });
+$("custom").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const n = $("fname").value.trim(); if (!n) return;
+  forward(n, Math.round((0.4 + Math.random() * 3) * 1e9)); $("fname").value = "";
+});
+logLine("Started 2 download worker(s)");
+logLine("Handlers registered on chat(s): ['Media drop']");
+</script>
+</body>
+</html>

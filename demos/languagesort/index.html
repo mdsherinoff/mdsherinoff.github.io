@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Language Sort · simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&family=Noto+Sans+Malayalam:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Sans+KR:wght@400;600&family=Noto+Sans+JP:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* A Jellyfin-looking page around the plugin's real detection order and its
+     Unicode-script detector (ScriptLanguageDetector.cs), ported line for line. */
+  :root { --bg: #101010; --panel: #1a1a1a; --card: #202020; --line: rgba(255,255,255,.08); --text: #eee; --dim: #959595; --accent: #00a4dc; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 "Noto Sans", "Noto Sans Malayalam", "Noto Sans Tamil", "Noto Sans Devanagari", "Noto Sans KR", "Noto Sans JP", "Noto Sans SC", system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: var(--panel); border-bottom: 1px solid var(--line); }
+  header .logo { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(from 200deg, #aa5cc3, #00a4dc, #aa5cc3); }
+  header small { color: var(--dim); margin-left: auto; }
+  main { display: grid; grid-template-columns: 280px 1fr; gap: 0; min-height: calc(100vh - 48px); }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
+  aside { padding: 16px; background: #141414; border-right: 1px solid var(--line); }
+  aside h2, section h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--dim); font-weight: 600; }
+  label.opt { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 10px; cursor: pointer; }
+  label.opt input { margin-top: 3px; accent-color: var(--accent); }
+  label.opt small { display: block; color: var(--dim); }
+  select { width: 100%; background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 6px; font: inherit; margin-bottom: 14px; }
+  .run { width: 100%; padding: 10px; border: 0; border-radius: 6px; background: var(--accent); color: #fff; font: 600 14px inherit; font-family: inherit; cursor: pointer; }
+  .run:disabled { opacity: .6; }
+  .try { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .try input { width: 100%; background: var(--card); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 8px; font: inherit; }
+  .try p { margin: 8px 0 0; color: var(--dim); min-height: 2.9em; }
+  .try b { color: var(--text); }
+  .content { padding: 16px 18px; overflow: hidden; }
+  section + section { margin-top: 22px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; }
+  .item .poster { aspect-ratio: 2 / 3; border-radius: 6px; padding: 8px; display: flex; align-items: flex-end; font-weight: 600; font-size: 15px; line-height: 1.2; overflow: hidden; word-break: break-word; }
+  .item .meta { margin-top: 5px; font-size: 12px; color: var(--dim); line-height: 1.35; }
+  .item .meta b { color: var(--text); font-weight: 600; }
+  .why { display: inline-block; margin-top: 3px; font-size: 11px; padding: 1px 6px; border-radius: 4px; background: rgba(0,164,220,.15); color: #7fd3f0; }
+  .why.audio { background: rgba(240,180,41,.15); color: #f0c35c; }
+  .why.script { background: rgba(170,92,195,.18); color: #d6a3e8; }
+  .why.none { background: rgba(255,255,255,.06); color: var(--dim); }
+  .colls { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .coll { animation: pop .35s ease both; }
+  .coll .poster { aspect-ratio: 2 / 3; border-radius: 6px; display: grid; place-items: center; text-align: center; padding: 10px; font-size: 20px; font-weight: 600; }
+  .coll .meta { margin-top: 5px; font-size: 12px; color: var(--dim); }
+  .placeholder { color: var(--dim); padding: 24px; border: 1px dashed var(--line); border-radius: 8px; text-align: center; }
+  @keyframes pop { from { opacity: 0; transform: translateY(8px); } }
+  .note { position: fixed; right: 10px; bottom: 10px; padding: 5px 9px; border-radius: 6px; background: rgba(0,0,0,.8); font-size: 11.5px; color: #ccc; }
+</style>
+</head>
+<body>
+<header><span class="logo"></span><b>Jellyfin</b> · Dashboard · Plugins · Language Sort<small>demo library</small></header>
+<main>
+  <aside>
+    <h2>Settings</h2>
+    <label class="opt"><input type="checkbox" id="tmdb" checked><span>TMDb API key configured<small>Use TMDb's original_language first</small></span></label>
+    <label class="opt"><input type="checkbox" id="script" checked><span>Guess language from original title script<small>Fallback when there's no TMDb match</small></span></label>
+    <label class="opt"><input type="checkbox" id="unknown"><span>Show "Unknown Language" group</span></label>
+    <h2 style="margin-top:14px">Language display format</h2>
+    <select id="fmt"><option value="EnglishName">English name ("French")</option><option value="NativeName">Native name ("Français")</option><option value="IsoCode">ISO code ("FR")</option></select>
+    <button class="run" id="run">Run "Update Language Collections"</button>
+    <div class="try">
+      <h2>Try the script detector</h2>
+      <input id="probe" placeholder="Type or paste a title, e.g. ദൃശ്യം" aria-label="Title to detect">
+      <p id="probeOut">Latin titles are inconclusive on purpose: lots of languages share that script.</p>
+    </div>
+  </aside>
+  <div class="content">
+    <section><h2>Collections</h2><div id="colls" class="colls"><div class="placeholder">Run the task to build one collection per language.</div></div></section>
+    <section><h2>Movies · <span id="count"></span> items</h2><div id="grid" class="grid"></div></section>
+  </div>
+</main>
+<span class="note">Simulation · real detection logic · TMDb answers are pre-filled for this demo</span>
+
+<script>
+// ---- ScriptLanguageDetector.cs, ported ----
+const MinimumMatches = 2;
+const ScriptRanges = [
+  [0x0900, 0x097F, "hi"], [0x0980, 0x09FF, "bn"], [0x0A00, 0x0A7F, "pa"], [0x0A80, 0x0AFF, "gu"],
+  [0x0B00, 0x0B7F, "or"], [0x0B80, 0x0BFF, "ta"], [0x0C00, 0x0C7F, "te"], [0x0C80, 0x0CFF, "kn"],
+  [0x0D00, 0x0D7F, "ml"], [0x0D80, 0x0DFF, "si"],
+  [0x3040, 0x30FF, "ja"], [0x1100, 0x11FF, "ko"], [0x3130, 0x318F, "ko"], [0xAC00, 0xD7AF, "ko"], [0x4E00, 0x9FFF, "zh"],
+  [0x0400, 0x04FF, "ru"], [0x0370, 0x03FF, "el"], [0x0590, 0x05FF, "he"], [0x0600, 0x077F, "ar"],
+  [0x0E00, 0x0E7F, "th"], [0x0E80, 0x0EFF, "lo"], [0x1000, 0x109F, "my"], [0x1200, 0x137F, "am"],
+  [0x10A0, 0x10FF, "ka"], [0x0530, 0x058F, "hy"], [0x1780, 0x17FF, "km"],
+];
+function detect(text) {
+  if (!text || !text.trim()) return null;
+  const counts = new Map(); let hasKana = false;
+  for (const ch of text) {               // C# iterates UTF-16 chars; all ranges here are in the BMP
+    const cp = ch.codePointAt(0);
+    for (const [start, end, lang] of ScriptRanges) {
+      if (cp >= start && cp <= end) { counts.set(lang, (counts.get(lang) || 0) + 1); if (lang === "ja") hasKana = true; break; }
+    }
+  }
+  if (!counts.size) return null;
+  if (hasKana && (counts.get("ja") || 0) + (counts.get("zh") || 0) >= MinimumMatches) return "ja";
+  const [lang, n] = [...counts].sort((a, b) => b[1] - a[1])[0];
+  return n >= MinimumMatches ? lang : null;
+}
+// ---- LanguageHelper.Resolve, via the browser's own locale data ----
+function resolve(code, format) {
+  if (!code) return "Unknown";
+  if (format === "IsoCode") return code.toUpperCase();
+  try {
+    const dn = new Intl.DisplayNames([format === "NativeName" ? code : "en"], { type: "language" });
+    const name = dn.of(code);
+    return name ? name.charAt(0).toUpperCase() + name.slice(1) : code.toUpperCase();
+  } catch { return code.toUpperCase(); }
+}
+// ISO 639-2 audio tags -> 639-1, as Jellyfin reports them
+const AUDIO = { eng: "en", mal: "ml", tam: "ta", hin: "hi", kor: "ko", jpn: "ja", chi: "zh", fre: "fr", spa: "es" };
+
+// demo library: original titles, what TMDb says, and the file's audio tag
+const LIBRARY = [
+  { title: "പ്രേമം", en: "Premam", tmdb: "ml", audio: "mal" },
+  { title: "കുമ്പളങ്ങി നൈറ്റ്സ്", en: "Kumbalangi Nights", tmdb: "ml", audio: null },
+  { title: "ദൃശ്യം", en: "Drishyam", tmdb: null, audio: null },
+  { title: "விக்ரம்", en: "Vikram", tmdb: "ta", audio: "tam" },
+  { title: "दंगल", en: "Dangal", tmdb: "hi", audio: "hin" },
+  { title: "기생충", en: "Parasite", tmdb: "ko", audio: "eng" },
+  { title: "千と千尋の神隠し", en: "Spirited Away", tmdb: "ja", audio: "eng" },
+  { title: "霸王别姬", en: "Farewell My Concubine", tmdb: null, audio: "chi" },
+  { title: "Le Fabuleux Destin d'Amélie Poulain", en: "Amélie", tmdb: "fr", audio: "fre" },
+  { title: "Roma", en: "Roma", tmdb: "es", audio: "spa" },
+  { title: "Dune: Part Two", en: "Dune: Part Two", tmdb: "en", audio: "eng" },
+  { title: "Interstellar", en: "Interstellar", tmdb: "en", audio: "eng" },
+  { title: "The Grand Budapest Hotel", en: "The Grand Budapest Hotel", tmdb: null, audio: null },
+  { title: "Arrival", en: "Arrival", tmdb: "en", audio: "eng" },
+];
+
+const $ = (id) => document.getElementById(id);
+const hue = (s) => { let h = 7; for (const c of s) h = (h * 31 + c.codePointAt(0)) % 360; return h; };
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// detection order from the README: TMDb, then title script, then audio tags
+function languageOf(item, opts) {
+  if (opts.tmdb && item.tmdb) return { code: item.tmdb, via: "tmdb", label: "TMDb" };
+  if (opts.script) { const s = detect(item.title); if (s) return { code: s, via: "script", label: "title script" }; }
+  if (item.audio) return { code: AUDIO[item.audio] || item.audio, via: "audio", label: `audio tag "${item.audio}"` };
+  return { code: null, via: "none", label: "no signal" };
+}
+const opts = () => ({ tmdb: $("tmdb").checked, script: $("script").checked, unknown: $("unknown").checked, fmt: $("fmt").value });
+
+function renderGrid() {
+  const o = opts();
+  $("grid").innerHTML = LIBRARY.map((it) => {
+    const r = languageOf(it, o);
+    return `<div class="item"><div class="poster" style="background:linear-gradient(170deg,hsl(${hue(it.en)} 30% 30%),#151515)">${esc(it.title)}</div>
+      <div class="meta"><b>${esc(it.en)}</b><br>→ ${esc(resolve(r.code, o.fmt))}<br><span class="why ${r.via}">${esc(r.label)}</span></div></div>`;
+  }).join("");
+}
+
+async function run() {
+  const o = opts();
+  $("run").disabled = true; $("run").textContent = "Running…";
+  $("colls").innerHTML = "";
+  const groups = new Map();
+  for (const it of LIBRARY) {
+    const r = languageOf(it, o);
+    if (!r.code && !o.unknown) continue;
+    const name = resolve(r.code, o.fmt);
+    if (!groups.has(name)) groups.set(name, []);
+    groups.get(name).push(it.en);
+  }
+  const sorted = [...groups].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+  for (const [i, [name, items]] of sorted.entries()) {
+    await new Promise((r) => setTimeout(r, 120));
+    $("colls").insertAdjacentHTML("beforeend", `<div class="coll" style="animation-delay:${i * 20}ms"><div class="poster" style="background:hsl(${hue(name)} 38% 26%)">${esc(name)}</div>
+      <div class="meta">${items.length} item${items.length > 1 ? "s" : ""} · ${esc(items.join(", "))}</div></div>`);
+  }
+  $("run").disabled = false; $("run").textContent = 'Run "Update Language Collections"';
+}
+
+$("probe").addEventListener("input", (e) => {
+  const v = e.target.value; const r = detect(v);
+  $("probeOut").innerHTML = !v.trim() ? "Latin titles are inconclusive on purpose: lots of languages share that script."
+    : r ? `Detected <b>${esc(resolve(r, "EnglishName"))}</b> (${r}) from the script.`
+    : "Inconclusive: needs at least two characters from a script that maps to one language.";
+});
+["tmdb", "script", "unknown", "fmt"].forEach((id) => $(id).addEventListener("change", () => { renderGrid(); if ($("colls").querySelector(".coll")) run(); }));
+$("run").addEventListener("click", run);
+$("count").textContent = LIBRARY.length;
+renderGrid();
+</script>
+</body>
+</html>

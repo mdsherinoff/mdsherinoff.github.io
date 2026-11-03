@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manglish Keyboard · web demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* A Raycast-style window around the extension's real logic (src/transliterate.ts). */
+  :root { --bg: #1c1c1e; --panel: #232325; --line: rgba(255,255,255,.08); --text: #ececec; --dim: #8b8b90; --sel: rgba(255,255,255,.08); --accent: #ff6363; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: grid; place-items: center; padding: 16px;
+    background: radial-gradient(120% 120% at 20% 0%, #3a2a4a 0%, #16161a 60%);
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; color: var(--text);
+  }
+  .win { width: min(680px, 100%); background: var(--bg); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+  .bar input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--text); font: inherit; font-size: 17px; }
+  .bar input::placeholder { color: var(--dim); }
+  .back { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: rgba(255,255,255,.06); color: var(--dim); font-size: 12px; }
+  .loadline { height: 2px; background: transparent; position: relative; overflow: hidden; }
+  .loadline.on::after { content: ""; position: absolute; inset: 0; width: 30%; background: linear-gradient(90deg, transparent, var(--accent), transparent); animation: slide 1s linear infinite; }
+  @keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(400%); } }
+  .list { min-height: 260px; padding: 8px; }
+  .section { padding: 8px 10px 6px; color: var(--dim); font-size: 12px; font-weight: 600; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 10px 10px; border-radius: 8px; }
+  .item.sel { background: var(--sel); }
+  .item .ic { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: #3b3b40; font-size: 12px; flex: none; }
+  .item .title { font-size: 15px; }
+  .item .title.ml { font-family: "Noto Sans Malayalam", sans-serif; font-size: 20px; }
+  .item .sub { color: var(--dim); }
+  .item .acc { margin-left: auto; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40%; }
+  .empty { display: grid; place-items: center; text-align: center; min-height: 240px; color: var(--dim); }
+  .empty b { display: block; color: var(--text); font-size: 15px; margin-bottom: 4px; }
+  .try { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .try button { background: rgba(255,255,255,.06); border: 1px solid var(--line); color: var(--text); border-radius: 6px; padding: 4px 9px; font: inherit; cursor: pointer; }
+  .try button:hover { background: rgba(255,255,255,.12); }
+  .foot { display: flex; align-items: center; gap: 14px; padding: 9px 14px; border-top: 1px solid var(--line); background: var(--panel); color: var(--dim); font-size: 12px; }
+  .foot .name { display: flex; align-items: center; gap: 8px; color: var(--text); }
+  .foot .logo { width: 16px; height: 16px; border-radius: 4px; background: linear-gradient(135deg, #ff6363, #b5179e); }
+  .foot .act { margin-left: auto; display: flex; gap: 12px; }
+  .foot button { background: none; border: 0; color: var(--text); font: inherit; cursor: pointer; padding: 0; }
+  kbd { font: inherit; background: rgba(255,255,255,.08); border-radius: 4px; padding: 1px 5px; color: var(--dim); }
+  .hud { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0; transition: .2s; background: #2c2c2e; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: 13px; }
+  .hud.on { opacity: 1; transform: translate(-50%, 0); }
+  .hud .ml { font-family: "Noto Sans Malayalam", sans-serif; }
+</style>
+</head>
+<body>
+<div class="win" role="application" aria-label="Manglish Keyboard demo">
+  <div class="bar">
+    <span class="back" aria-hidden="true">←</span>
+    <input id="q" autocomplete="off" spellcheck="false" placeholder="Type Manglish (e.g. namaskaram, sakhavu, enthu)..." aria-label="Type Manglish">
+  </div>
+  <div class="loadline" id="load"></div>
+  <div class="list" id="list" aria-live="polite"></div>
+  <div class="foot">
+    <span class="name"><span class="logo"></span>Type in Manglish</span>
+    <span class="act"><button id="copy">Copy to Clipboard <kbd>↵</kbd></button><button id="both">Copy Both <kbd>⌘ ↵</kbd></button></span>
+  </div>
+</div>
+<div class="hud" id="hud"></div>
+
+<script>
+// Same logic as the extension's src/transliterate.ts: word-by-word Google Input
+// Tools lookups with a cache, punctuation kept, 400 ms debounce while typing.
+const wordCache = new Map();
+
+async function fetchWord(word) {
+  const url = `https://inputtools.google.com/request?text=${encodeURIComponent(word)}&itc=ml-t-i0-und&num=1&cp=0&cs=1&ie=utf-8&oe=utf-8`;
+  const res = await fetch(url);
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (data[0] !== "SUCCESS") return null;
+  return data[1]?.[0]?.[1]?.[0] ?? null;
+}
+
+function splitPunctuation(token) {
+  const m = token.match(/^([^a-zA-Z]*)([a-zA-Z]*)([^a-zA-Z]*)$/);
+  return { leading: m?.[1] ?? "", word: m?.[2] ?? "", trailing: m?.[3] ?? "" };
+}
+
+async function transliterate(input) {
+  if (!input.trim()) return "";
+  const parsed = input.trim().split(/\s+/).map(splitPunctuation);
+  const uncached = parsed.map((p) => p.word).filter((w) => w && !wordCache.has(w));
+  await Promise.all(uncached.map(async (w) => { const r = await fetchWord(w); if (r !== null) wordCache.set(w, r); }));
+  const parts = parsed.map(({ word, leading, trailing }) => {
+    if (!word) return leading + trailing;
+    const t = wordCache.get(word);
+    return t === undefined ? null : leading + t + trailing;
+  });
+  return parts.some((p) => p === null) ? null : parts.join(" ");
+}
+
+const $ = (id) => document.getElementById(id);
+const q = $("q"), list = $("list"), load = $("load"), hud = $("hud");
+let input = "", output = null, loading = false, timer = 0, reqId = 0;
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function render() {
+  load.classList.toggle("on", loading);
+  if (output && !loading) {
+    list.innerHTML = `<div class="section">Results</div>
+      <div class="item sel"><span class="ic">മ</span><span class="title ml">${esc(output)}</span><span class="sub">Malayalam Output</span><span class="acc">← ${esc(input)}</span></div>
+      <div class="item"><span class="ic">A</span><span class="title">${esc(input)}</span><span class="sub">Your Manglish input</span><span class="acc">Romanized</span></div>`;
+  } else if (output === null && !loading && input.trim()) {
+    list.innerHTML = `<div class="item sel"><span class="ic">!</span><span class="title">Transliteration failed</span><span class="sub">Check your connection and try again</span></div>`;
+  } else if (!input.trim()) {
+    const words = ["namaskaram", "nanni", "enthu vishesham", "mazha", "keralam", "sakhavu"];
+    list.innerHTML = `<div class="empty"><div><b>Manglish Keyboard</b>Type anything in Manglish to get Malayalam script
+      <div class="try">${words.map((w) => `<button data-w="${w}">${w}</button>`).join("")}</div></div></div>`;
+    list.querySelectorAll("[data-w]").forEach((b) => (b.onclick = () => { q.value = b.dataset.w; onChange(); q.focus(); }));
+  }
+}
+
+function onChange() {
+  input = q.value; output = null;
+  clearTimeout(timer);
+  if (!input.trim()) { reqId++; loading = false; return render(); }
+  loading = true; render();
+  timer = setTimeout(async () => {
+    const id = ++reqId;
+    try { const r = await transliterate(input); if (id === reqId) output = r; }
+    catch { if (id === reqId) output = null; }
+    finally { if (id === reqId) { loading = false; render(); } }
+  }, 400);
+}
+
+let hudTimer = 0;
+function showHUD(html) { hud.innerHTML = html; hud.classList.add("on"); clearTimeout(hudTimer); hudTimer = setTimeout(() => hud.classList.remove("on"), 1600); }
+async function copy(both) {
+  if (!output) return;
+  try { await navigator.clipboard.writeText(both ? `${input} = ${output}` : output); } catch {}
+  showHUD(both ? "Copied both" : `Copied: <span class="ml">${esc(output)}</span>`);
+}
+
+q.addEventListener("input", onChange);
+q.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); copy(e.metaKey || e.ctrlKey); } });
+$("copy").onclick = () => copy(false);
+$("both").onclick = () => copy(true);
+render();
+</script>
+</body>
+</html>
