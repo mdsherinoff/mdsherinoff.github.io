@@ -1,3 +1,11 @@
+// The masthead dates the issue by the page's last deploy (GitHub Pages sends
+// Last-Modified); the month written in the HTML is the fallback.
+const issueDate = document.getElementById("issue-date");
+const modified = new Date(document.lastModified);
+if (issueDate && !isNaN(modified)) {
+  issueDate.textContent = modified.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+}
+
 // Demos stay as still images until someone presses play, so the page loads
 // light; then the real thing (or its web port) loads in place.
 document.querySelectorAll(".demo").forEach((fig) => {

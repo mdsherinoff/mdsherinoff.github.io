@@ -6,9 +6,16 @@
 <title>Mohammed Sherin</title>
 <meta name="description" content="Mohammed Sherin: final-year CS student in Doha. Projects, each with a demo you can try, laid out like a magazine.">
 <meta name="color-scheme" content="light">
+<link rel="canonical" href="https://mdsherinoff.github.io/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mdsherinoff.github.io/portfolio/">
 <meta property="og:title" content="Mohammed Sherin">
 <meta property="og:description" content="Final-year CS student in Doha. Every project here has a demo you can try.">
-<meta property="og:image" content="assets/shots/openministry.jpg">
+<meta property="og:image" content="https://mdsherinoff.github.io/portfolio/assets/shots/openministry.jpg">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="875">
+<meta property="og:image:alt" content="openMinistry's statements page with verified quotes, topic tags and sources">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/avatar.png">
 <link rel="apple-touch-icon" href="assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +29,7 @@
   <div class="ears">
     <span>Doha, Qatar</span>
     <span>Vol. 1 · No. 1</span>
-    <span>November 2026</span>
+    <span id="issue-date">November 2026</span>
   </div>
   <h1 class="title">Mohammed Sherin</h1>
   <div class="strap">
@@ -42,9 +49,9 @@
       <p class="deck">Nobody kept track, so I built the archive myself: 600+ verified statements from 140 public representatives, searchable and open.</p>
       <p class="byline">By Mohammed Sherin · Founder</p>
       <figure class="demo" data-src="https://www.openministry.live" data-kind="live" data-title="openMinistry">
-        <div class="demo__chrome"><span class="url">openministry.live</span><span class="tag">Live site</span></div>
+        <div class="demo__chrome"><span class="url">openministry.live</span><span class="tag">Static demo</span></div>
         <div class="demo__stage"><img src="assets/shots/openministry.jpg" alt="openMinistry's statements page with verified quotes, topic tags and sources" width="1400" height="875"><button class="play">Try it here</button></div>
-        <figcaption>The demo archive, live. Press play to browse it inside the page.</figcaption>
+        <figcaption>A static demo with a sample of the archive. Press play to browse it inside the page.</figcaption>
       </figure>
       <div class="cols">
         <p class="dropcap">The pipeline starts with the news. It scrapes Kerala's papers, uses an LLM to pull out each statement made by a minister or MLA, and sends it to a human moderator before anything is published. What's approved goes to a searchable site and a public REST API.</p>
@@ -67,7 +74,7 @@
         <li><a href="#wc-pool"><span>Prediction Pool</span><em>The World Cup league</em></a></li>
         <li><a href="#telefin"><span>telefin</span><em>Telegram to Jellyfin</em></a></li>
         <li><a href="#odins-garden"><span>Odin's Garden</span><em>A plant diary</em></a></li>
-        <li><a href="#complyqatar"><span>ComplyQatar</span><em>In production</em></a></li>
+        <li><a href="#complyqatar"><span>ComplyQatar</span><em>In development</em></a></li>
         <li><a href="#cv"><span>The CV, briefly</span><em>Three jobs in Doha</em></a></li>
         <li><a href="#writing"><span>From the blog</span><em>Homelab notes</em></a></li>
       </ol>
@@ -168,9 +175,9 @@
     </div>
 
     <article class="notice" id="complyqatar">
-      <p class="kicker">Coming soon · ComplyQatar</p>
+      <p class="kicker">In development · ComplyQatar</p>
       <h3 class="headline">Every licence, permit and contract a company holds, with a warning before any of them lapse</h3>
-      <p>A multi-tenant app for companies in Qatar: red, amber and green status by location, renewal alerts, and a document vault. Freemium, with a first rollout planned at Transind Holding. It's in production and private, so there's no demo here. <a href="#letters">Ask me for a walkthrough.</a></p>
+      <p>A multi-tenant app for companies in Qatar: red, amber and green status by location, renewal alerts, and a document vault. Freemium, with a first rollout planned at Transind Holding. It's still being built and is private, so there's no demo here. <a href="#letters">Ask me for a walkthrough.</a></p>
       <p class="spec">Next.js · TypeScript · Supabase / PostgreSQL with row-level security · Drizzle</p>
     </article>
 
@@ -200,10 +207,9 @@
       <h2 class="section-label" id="writing-h"><span>From the blog</span></h2>
       <ol class="posts">
         <!-- writing:start -->
-        <li><a href="writing/exitnode-athome/"><time datetime="2026-05-27">27 May 2026</time><b>How I setup Exit Node through my Home Network</b></a></li>
+        <li><a href="writing/exitnode-athome/"><time datetime="2026-05-27">27 May 2026</time><b>How I Set Up an Exit Node Through My Home Network</b></a></li>
         <li><a href="writing/accesshome-anywhere/"><time datetime="2026-04-05">5 Apr 2026</time><b>How I Access My Home Network from Anywhere in The World</b></a></li>
         <li><a href="writing/accessserver-tailscale/"><time datetime="2026-04-05">5 Apr 2026</time><b>How I Access My Home Server from Anywhere in The World</b></a></li>
-        <li><a href="writing/myfirstpost/"><time datetime="2026-04-05">5 Apr 2026</time><b>My First Post</b></a></li>
         <!-- writing:end -->
       </ol>
     </section>

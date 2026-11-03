@@ -24,6 +24,10 @@ POSTS_DIR = "mohammedsherinblog/content/posts"
 BLOG_URL = "https://mdsherinoff.github.io/posts/"
 ROOT = Path(__file__).resolve().parent.parent
 
+# posts left off this site, and titles tidied up for it (the blog keeps its own)
+SKIP = {"myfirstpost"}
+TITLES = {"exitnode-athome": "How I Set Up an Exit Node Through My Home Network"}
+
 
 def fetch(url: str) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": "portfolio-import", "Accept": "application/vnd.github+json"})
@@ -169,15 +173,17 @@ document.querySelectorAll("pre .copy").forEach((b) => b.addEventListener("click"
 def main() -> None:
     posts = []
     for name, url in list_posts():
+        slug = name[:-3].lower()
+        if slug in SKIP:
+            continue
         meta, body = parse_front_matter(fetch(url).decode("utf-8"))
         if meta.get("draft") == "true":
             continue
-        slug = name[:-3].lower()
         when = datetime.fromisoformat(meta["date"])
         words = len(plain(body).split())
         post = {
             "slug": slug,
-            "title": meta.get("title", slug),
+            "title": TITLES.get(slug, meta.get("title", slug)),
             "when": when,
             "date": when.strftime("%-d %b %Y"),
             "minutes": max(1, round(words / 200)),
