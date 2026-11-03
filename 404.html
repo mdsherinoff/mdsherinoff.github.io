@@ -7,11 +7,14 @@
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex">
 <script>
-  // The blog used to live at the root (/posts/…, /tags/…, /index.xml); it's now under /blog/.
+  // Old addresses: the portfolio used to live at /portfolio/, and the blog at the
+  // root (/posts/…, /tags/…, /index.xml) before it moved to /blog/.
   (function () {
-    var p = location.pathname;
-    if (/^\/(posts|tags|series|categories)(\/|$)|^\/index\.xml$|^\/sitemap\.xml$/.test(p)) {
-      location.replace("/blog" + p + location.search + location.hash);
+    var p = location.pathname, rest = location.search + location.hash;
+    if (/^\/portfolio(\/|$)/.test(p)) {
+      location.replace((p.replace(/^\/portfolio/, "") || "/") + rest);
+    } else if (/^\/(posts|tags|series|categories)(\/|$)|^\/index\.xml$|^\/sitemap\.xml$/.test(p)) {
+      location.replace("/blog" + p + rest);
     }
   })();
 </script>
