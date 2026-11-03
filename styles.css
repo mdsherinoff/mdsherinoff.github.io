@@ -41,7 +41,8 @@ img { display: block; max-width: 100%; height: auto; }
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--rule);
 }
-.mark { font: italic 400 20px/1 var(--serif); text-decoration: none; white-space: nowrap; }
+.mark { display: inline-flex; align-items: center; gap: 10px; font: italic 400 21px/1 var(--serif); text-decoration: none; white-space: nowrap; }
+.mark img { width: 28px; height: 28px; border-radius: 6px; image-rendering: pixelated; background: #fff; }
 .bar nav { display: flex; gap: clamp(12px, 2.4vw, 28px); font: 500 13px/1 var(--mono); letter-spacing: .04em; }
 .bar nav a { text-decoration: none; color: var(--muted); }
 .bar nav a:hover { color: var(--ink); }
@@ -142,6 +143,34 @@ main > section { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter
 .also li > span:not(.nolink) { font-size: 15px; color: color-mix(in srgb, var(--ink) 80%, var(--paper)); }
 .also em { font: normal 500 12px/1.4 var(--mono); color: var(--muted); text-align: right; }
 @media (max-width: 760px) { .also li { grid-template-columns: 1fr; gap: 4px; } .also em { text-align: left; } }
+
+/* ---------- writing ---------- */
+
+.writing { padding-top: 56px !important; padding-bottom: 24px !important; }
+.posts { list-style: none; margin: 0; padding: 0; }
+.posts a { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr) auto; gap: 4px clamp(24px, 4vw, 56px); padding: 18px 0; border-bottom: 1px solid var(--rule); text-decoration: none; align-items: baseline; }
+.posts time, .posts .m { font: 500 13px/1.4 var(--mono); color: var(--muted); }
+.posts .t { font: 400 26px/1.15 var(--serif); grid-column: 2; }
+.posts .s { grid-column: 2; font-size: 15px; color: color-mix(in srgb, var(--ink) 75%, var(--paper)); }
+.posts .m { grid-column: 3; grid-row: 1; }
+.posts a:hover .t { color: var(--accent); }
+@media (max-width: 760px) { .posts a { grid-template-columns: 1fr auto; } .posts .t, .posts .s { grid-column: 1 / -1; } .posts .m { grid-column: 2; } }
+
+/* ---------- a single post ---------- */
+
+.post { max-width: 720px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) var(--gutter) 48px; }
+.post .eyebrow a { color: inherit; }
+.post h1 { margin: 0 0 32px; font: 400 clamp(40px, 6vw, 64px)/1.02 var(--serif); letter-spacing: -.01em; }
+.post__body { font-size: 17.5px; line-height: 1.7; }
+.post__body p { margin: 0 0 1.1em; }
+.post__body h2, .post__body h3 { font: 400 30px/1.2 var(--serif); margin: 1.6em 0 .5em; }
+.post__body ul { padding-left: 1.2em; margin: 0 0 1.1em; }
+.post__body code { font: 15px var(--mono); background: var(--paper-2); padding: 1px 5px; border-radius: 4px; }
+.post__body pre { position: relative; margin: 0 0 1.2em; padding: 14px 16px; padding-right: 72px; overflow-x: auto; background: #171512; color: #ece7dc; border-radius: 8px; }
+.post__body pre code { background: none; padding: 0; font-size: 14px; line-height: 1.6; color: inherit; }
+.post__body pre .copy { position: absolute; top: 8px; right: 8px; padding: 4px 9px; border: 1px solid rgba(255,255,255,.2); border-radius: 5px; background: transparent; color: #cfc8ba; font: 500 11.5px var(--mono); cursor: pointer; }
+.post__body pre .copy:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+.post__foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--rule); font: 500 13px/1.6 var(--mono); color: var(--muted); }
 
 /* ---------- experience ---------- */
 

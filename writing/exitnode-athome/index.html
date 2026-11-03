@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How I setup Exit Node through my Home Network · Mohammed Sherin</title>
+<meta name="description" content="I managed to do this through Tailscale.">
+<link rel="canonical" href="https://mdsherinoff.github.io/posts/exitnode-athome/">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../../assets/avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+<header class="bar">
+  <a class="mark" href="../../"><img src="../../assets/avatar.png" alt="" width="28" height="28">Mohammed Sherin</a>
+  <nav aria-label="Sections">
+    <a href="../../#work">Projects</a>
+    <a href="../../#writing">Writing</a>
+    <a href="../../#about">About</a>
+    <a href="../../#contact">Contact</a>
+  </nav>
+</header>
+<main class="post">
+  <p class="eyebrow"><a href="../../#writing">Writing</a> · <time datetime="2026-05-27">27 May 2026</time> · 1 min read</p>
+  <h1>How I setup Exit Node through my Home Network</h1>
+  <div class="post__body">
+<p>I managed to do this through Tailscale.</p>
+<p>Follow my short and simple guide to setup remote access to home network and Proxmox server here:</p>
+<ul><li><a href="../accesshome-anywhere/">How I Access My Home Network from Anywhere in The World</a></li><li><a href="../accessserver-tailscale/">How I Access My Home Server from Anywhere in The World</a></li></ul>
+<p>After you are done with setting up tailscale on your home and Proxmox server, go into your device console which is going to be used as your exit node and type this in:</p>
+<pre data-lang="shell"><code>sudo tailscale set --advertise-exit-node
+sudo tailscale up</code><button class="copy" type="button">Copy</button></pre>
+<p>Once you are done with this, all you have to do is go into your tailscale web console and permit the machine to act as an exit node.</p>
+<p>Now you have an exit node setup through the network at which your machine is.</p>
+<p>Access this exit node from another machine on your tailscale network as normally as connecting to the tailscale VPN and choosing the other machine as your exit node in there.</p>
+  </div>
+  <p class="post__foot">First published on <a href="https://mdsherinoff.github.io/posts/exitnode-athome/" target="_blank" rel="noopener">my blog ↗</a> · <a href="../../#writing">More writing</a></p>
+</main>
+<footer class="foot"><p>Mohammed Sherin · Doha</p><p><a href="../../">Back to the portfolio</a></p></footer>
+<script>
+document.querySelectorAll("pre .copy").forEach((b) => b.addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText(b.previousElementSibling.textContent); b.textContent = "Copied"; } catch { b.textContent = "Select and copy"; }
+  setTimeout(() => (b.textContent = "Copy"), 1500);
+}));
+</script>
+</body>
+</html>

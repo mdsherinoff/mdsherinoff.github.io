@@ -9,7 +9,8 @@
 <meta property="og:description" content="Final-year CS student in Doha. Every project here has a demo you can try.">
 <meta property="og:image" content="assets/shots/openministry.jpg">
 <meta name="color-scheme" content="light dark">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23171512'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia' font-style='italic' font-size='17' fill='%23f3efe6'%3Ems%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="assets/avatar.png">
+<link rel="apple-touch-icon" href="assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -18,10 +19,11 @@
 <body>
 
 <header class="bar">
-  <a class="mark" href="#top">Mohammed Sherin Valiyakath</a>
+  <a class="mark" href="#top"><img src="assets/avatar.png" alt="" width="28" height="28">Mohammed Sherin</a>
   <nav aria-label="Sections">
     <a href="#work">Projects</a>
     <a href="#experience">Experience</a>
+    <a href="#writing">Writing</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -206,6 +208,21 @@
     </ol>
   </section>
 
+  <section class="writing" id="writing" aria-labelledby="writing-h">
+    <div class="section-head">
+      <h2 id="writing-h">Writing</h2>
+      <p>Notes from my homelab, copied over from <a href="https://mdsherinoff.github.io" target="_blank" rel="noopener">my blog ↗</a>, which is still where they're first published.</p>
+    </div>
+    <ul class="posts">
+      <!-- writing:start -->
+      <li><a href="writing/exitnode-athome/"><time datetime="2026-05-27">27 May 2026</time><span class="t">How I setup Exit Node through my Home Network</span><span class="s">I managed to do this through Tailscale.</span><span class="m">1 min</span></a></li>
+      <li><a href="writing/accesshome-anywhere/"><time datetime="2026-04-05">5 Apr 2026</time><span class="t">How I Access My Home Network from Anywhere in The World</span><span class="s">First setup Tailscale, follow my short and simple guide here: How I Access My Home Network from Anywhere in The World After you are done with that,…</span><span class="m">1 min</span></a></li>
+      <li><a href="writing/accessserver-tailscale/"><time datetime="2026-04-05">5 Apr 2026</time><span class="t">How I Access My Home Server from Anywhere in The World</span><span class="s">I started by creating an Ubuntu container inside my Proxmox Environment.</span><span class="m">1 min</span></a></li>
+      <li><a href="writing/myfirstpost/"><time datetime="2026-04-05">5 Apr 2026</time><span class="t">My First Post</span><span class="s">Hello World This is my puny attempt at creating a Blog.</span><span class="m">1 min</span></a></li>
+      <!-- writing:end -->
+    </ul>
+  </section>
+
   <section class="about" id="about" aria-labelledby="about-h">
     <div class="section-head"><h2 id="about-h">About</h2></div>
     <div class="about__cols">
@@ -233,7 +250,7 @@
 </main>
 
 <footer class="foot">
-  <p>Mohammed Sherin Valiyakath · Doha, 2026</p>
+  <p>Mohammed Sherin · Doha, 2026</p>
   <p>Built by hand, no framework. The demos run my projects' own code wherever a browser allows.</p>
 </footer>
 

@@ -13,6 +13,8 @@ Plain HTML, CSS and a few lines of JS. No framework and no build step.
   - `ringlog/`: Ringlog's real `app.html` with `mock.js` standing in for the local Python server; `calls.json` and the sample exports were generated with Ringlog's own exporter from made-up calls
   - `telefin/`: a simulation using the bot's real rules and message text
   - `languagesort/`: the plugin's script detector ported from C#, over a demo library
+- `writing/`: blog posts copied from the Hugo blog (`my-blog` repo) by `scripts/import_blog.py`; the blog stays the original and each copy links back to it
+- `assets/avatar.png`: my GitHub avatar, used as the logo and favicon
 - `archive/`: earlier experiments (2D VHS version, 3D store), kept for reference
 
 openMinistry and Bingely are embedded straight from their live sites.
@@ -21,6 +23,14 @@ openMinistry and Bingely are embedded straight from their live sites.
 
 ```bash
 python3 -m http.server 4173
+```
+
+## Bringing in new blog posts
+
+Write on the blog as usual, then:
+
+```bash
+python3 scripts/import_blog.py
 ```
 
 ## Refreshing demo data
