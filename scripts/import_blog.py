@@ -37,7 +37,7 @@ def fetch(url: str) -> bytes:
 
 def list_posts() -> list[tuple[str, str]]:
     items = json.loads(fetch(f"https://api.github.com/repos/{REPO}/contents/{POSTS_DIR}"))
-    return [(i["name"], i["download_url"]) for i in items if i["name"].endswith(".md")]
+    return [(i["name"], i["download_url"]) for i in items if i["name"].endswith(".md") and not i["name"].startswith("_")]
 
 
 def parse_front_matter(text: str) -> tuple[dict, str]:
@@ -187,7 +187,7 @@ def main() -> None:
             "when": when,
             "date": when.strftime("%-d %b %Y"),
             "minutes": max(1, round(words / 200)),
-            "summary": summary(body),
+            "summary": meta.get("description") or summary(body),
             "canonical": f"{BLOG_URL}{slug}/",
         }
         out = ROOT / "writing" / slug / "index.html"
