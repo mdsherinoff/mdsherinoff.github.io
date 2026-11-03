@@ -3,29 +3,74 @@
   --paper: #f3eee3;
   --ink: #15130f;
   --soft: #4a453c;
-  --muted: #7a7366;
+  --muted: #6b6458;
   --rule: #15130f;
   --hair: #cfc6b4;
   --red: #b3261e;
+  --dots: rgba(0,0,0,.035);   /* paper grain */
+  --tint: rgba(255,255,255,.35);
+  --code-tint: rgba(0,0,0,.06);
+  --code-bg: #15130f;
 
   --display: "Libre Caslon Display", "Didot", Georgia, serif;
   --text: "Newsreader", Georgia, serif;
   --label: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif;
   --wrap: 1240px;
   --g: clamp(16px, 3.5vw, 36px);
+  color-scheme: light dark;
 }
+/* Night edition: the same paper and ink, turned over. It follows the system
+   setting unless the reader picks an edition with the masthead switch, which
+   sets data-theme on <html>. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16140f;
+    --ink: #ece6d8;
+    --soft: #c9c1af;
+    --muted: #a39b8a;
+    --rule: #ece6d8;
+    --hair: #3a352c;
+    --red: #e8675c;
+    --dots: rgba(255,255,255,.03);
+    --tint: rgba(255,255,255,.04);
+    --code-tint: rgba(255,255,255,.09);
+    --code-bg: #0b0a08;
+    color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) .demo__stage img { opacity: .92; }
+}
+:root[data-theme="dark"] {
+  --paper: #16140f;
+  --ink: #ece6d8;
+  --soft: #c9c1af;
+  --muted: #a39b8a;
+  --rule: #ece6d8;
+  --hair: #3a352c;
+  --red: #e8675c;
+  --dots: rgba(255,255,255,.03);
+  --tint: rgba(255,255,255,.04);
+  --code-tint: rgba(255,255,255,.09);
+  --code-bg: #0b0a08;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] .demo__stage img { opacity: .92; }
+:root[data-theme="light"] { color-scheme: light; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
   font: 18px/1.55 var(--text); font-optical-sizing: auto;
-  background-image: radial-gradient(rgba(0,0,0,.035) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
   background-size: 3px 3px;
 }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--red); }
 img { display: block; max-width: 100%; height: auto; }
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+main:focus { outline: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 16px; top: -100px; z-index: 100; padding: 10px 14px; background: var(--ink); color: var(--paper); font: 600 13px/1 var(--label); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+.skip:focus { top: 16px; color: var(--paper); }
 
 main, .masthead, .colophon { max-width: var(--wrap); margin: 0 auto; padding-left: var(--g); padding-right: var(--g); }
 
@@ -49,6 +94,9 @@ main, .masthead, .colophon { max-width: var(--wrap); margin: 0 auto; padding-lef
   .strap nav { justify-content: center; flex-wrap: wrap; }
   .ears span:nth-child(2) { display: none; }
 }
+.ears > * { white-space: nowrap; }
+/* phones: the edition switch matters more than the month */
+@media (max-width: 440px) { #issue-date { display: none; } }
 
 /* ---------- terms explained on tap ---------- */
 .term { color: inherit; text-decoration: underline dashed; text-decoration-color: var(--muted); text-decoration-thickness: 1px; text-underline-offset: 4px; cursor: help; }
@@ -146,7 +194,7 @@ figcaption { padding-top: 7px; border-top: 1px solid var(--hair); margin-top: 8p
 .short .headline { font-size: clamp(28px, 3vw, 36px); margin-bottom: 12px; }
 @media (max-width: 900px) { .pair { grid-template-columns: 1fr; } .short, .short + .short { padding: 26px 0; border-left: 0; } .short + .short { border-top: 1px solid var(--rule); } }
 
-.notice { margin: 30px 0; padding: 20px 26px 16px; border: 1px solid var(--rule); border-top: 6px solid var(--rule); background: rgba(255,255,255,.35); }
+.notice { margin: 30px 0; padding: 20px 26px 16px; border: 1px solid var(--rule); border-top: 6px solid var(--rule); background: var(--tint); }
 .notice .headline { font-size: clamp(26px, 3vw, 38px); margin-bottom: 12px; max-width: 26em; }
 .notice p:not(.kicker):not(.spec) { max-width: 46em; }
 
@@ -191,6 +239,10 @@ figcaption { padding-top: 7px; border-top: 1px solid var(--hair); margin-top: 8p
 .colophon p { margin: 0; }
 
 /* ---------- a single blog post ---------- */
+.ears__end { display: flex; align-items: center; gap: 14px; }
+.edition { padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+.edition:hover, .edition[aria-pressed="true"] { color: var(--red); }
+.edition span { margin-right: 5px; }
 .masthead--slim .ears { border-bottom: 4px double var(--rule); }
 .masthead--slim .ears a { text-decoration: none; }
 .post { max-width: 760px; padding-top: clamp(32px, 6vw, 64px); padding-bottom: 48px; }
@@ -199,9 +251,16 @@ figcaption { padding-top: 7px; border-top: 1px solid var(--hair); margin-top: 8p
 .post__body > p:first-child::first-letter { float: left; font: 400 4.4em/.78 var(--display); margin: .06em .08em 0 0; color: var(--red); }
 .post__body h2, .post__body h3 { font: 400 30px/1.15 var(--display); margin: 1.4em 0 .4em; }
 .post__body ul { padding-left: 1.2em; }
-.post__body code { font: 15px "IBM Plex Mono", ui-monospace, monospace; background: rgba(0,0,0,.06); padding: 1px 5px; }
-.post__body pre { position: relative; margin: 0 0 1.2em; padding: 14px 76px 14px 16px; overflow-x: auto; background: var(--ink); color: #ece7dc; border-left: 4px solid var(--red); }
+.post__body code { font: 15px "IBM Plex Mono", ui-monospace, monospace; background: var(--code-tint); padding: 1px 5px; }
+.post__body pre { position: relative; margin: 0 0 1.2em; padding: 14px 76px 14px 16px; overflow-x: auto; background: var(--code-bg); color: #ece7dc; border-left: 4px solid var(--red); }
 .post__body pre code { background: none; padding: 0; font-size: 14px; line-height: 1.6; color: inherit; }
 .post__body pre .copy { position: absolute; top: 8px; right: 8px; padding: 4px 9px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: #ddd5c6; font: 700 10.5px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
 .post__body pre .copy:hover { color: #fff; border-color: #fff; }
 .post__foot { margin-top: 36px; padding-top: 12px; border-top: 1px solid var(--rule); font: 600 12px/1.6 var(--label); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* Motion off for people who ask for less of it. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .play:hover { transform: translate(-50%, -50%); }
+}

@@ -1,3 +1,30 @@
+// Day or night edition. With no choice saved the page follows the system
+// setting; the masthead switch saves a choice (the inline script in <head>
+// applies it before first paint). Picking what the system already shows
+// clears the choice, so the page goes back to following the system.
+const root = document.documentElement;
+const systemDark = matchMedia("(prefers-color-scheme: dark)");
+const edition = document.querySelector(".edition");
+const isDark = () => (root.dataset.theme ? root.dataset.theme === "dark" : systemDark.matches);
+function syncEdition() {
+  if (edition) edition.setAttribute("aria-pressed", String(isDark()));
+}
+if (edition) {
+  edition.hidden = false;
+  edition.addEventListener("click", () => {
+    const next = isDark() ? "light" : "dark";
+    const followSystem = (next === "dark") === systemDark.matches;
+    if (followSystem) delete root.dataset.theme;
+    else root.dataset.theme = next;
+    try {
+      followSystem ? localStorage.removeItem("theme") : localStorage.setItem("theme", next);
+    } catch {}
+    syncEdition();
+  });
+}
+systemDark.addEventListener("change", syncEdition);
+syncEdition();
+
 // The masthead dates the issue by the page's last deploy (GitHub Pages sends
 // Last-Modified); the month written in the HTML is the fallback.
 const issueDate = document.getElementById("issue-date");
@@ -18,10 +45,12 @@ modal.hidden = true;
 modal.innerHTML = `<div class="demo demo-modal__panel" role="dialog" aria-modal="true">
   <div class="demo__chrome"><span class="url"></span><span class="tag"></span><span class="demo__tools"><a target="_blank" rel="noopener">Open in a tab ↗</a><button type="button">Close</button></span></div>
   <div class="demo__stage"></div>
+  <p class="sr-only" role="status"></p>
 </div>`;
 const panel = modal.firstElementChild;
 const panelStage = panel.querySelector(".demo__stage");
 const closeButton = panel.querySelector(".demo__tools button");
+const status = panel.querySelector("[role=status]");
 let current = null;
 
 // where the demo sits on the page: its label bar down to the bottom of the still
@@ -67,6 +96,8 @@ function openDemo(fig) {
     frame.title = `${title} demo`;
     frame.allow = "clipboard-write";
     frame.addEventListener("load", () => { loading.remove(); frame.classList.add("is-ready"); });
+    status.textContent = `Loading ${title} demo…`;
+    frame.addEventListener("load", () => { status.textContent = `${title} demo loaded`; }, { once: true });
     panelStage.append(loading, frame);
   });
 }
@@ -75,6 +106,7 @@ function closeDemo() {
   const fig = current;
   if (!fig) return;
   current = null;
+  status.textContent = "";
   // shrink the still, not the live page, back into its spot
   panelStage.innerHTML = fig.querySelector(".demo__stage img").outerHTML;
   modal.classList.remove("is-open");
@@ -90,9 +122,21 @@ function closeDemo() {
 }
 
 document.querySelectorAll(".demo").forEach((fig) => {
-  fig.querySelector(".play").addEventListener("click", () => openDemo(fig));
+  const play = fig.querySelector(".play");
+  const title = fig.dataset.title || fig.closest(".project").querySelector("h3").textContent;
+  // every button reads "Try it here", so name the project for screen readers
+  play.setAttribute("aria-label", `${play.textContent}: ${title} demo`);
+  play.addEventListener("click", () => openDemo(fig));
 });
 document.body.appendChild(modal);
+
+// Links that open a new tab say so to screen readers.
+document.querySelectorAll('a[target="_blank"]').forEach((a) => {
+  const note = document.createElement("span");
+  note.className = "sr-only";
+  note.textContent = " (opens in a new tab)";
+  a.append(note);
+});
 closeButton.addEventListener("click", closeDemo);
 modal.addEventListener("click", (e) => { if (e.target === modal) closeDemo(); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && current) closeDemo(); });
@@ -137,6 +181,10 @@ document.querySelectorAll(".term").forEach((term) => {
   term.addEventListener("click", (e) => {
     e.preventDefault();
     openTerm === term ? closeTerm() : showTerm(term);
+  });
+  // links only answer Enter; buttons answer Space too
+  term.addEventListener("keydown", (e) => {
+    if (e.key === " ") { e.preventDefault(); term.click(); }
   });
 });
 document.addEventListener("click", (e) => {
