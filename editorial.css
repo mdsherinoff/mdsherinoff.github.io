@@ -38,7 +38,7 @@ main, .masthead, .colophon { max-width: var(--wrap); margin: 0 auto; padding-lef
 /* ---------- masthead ---------- */
 .masthead { padding-top: 18px; }
 .ears { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 4px solid var(--rule); border-bottom: 1px solid var(--rule); font: 600 11px/1 var(--label); letter-spacing: .16em; text-transform: uppercase; }
-.title { margin: 0; padding: 14px 0 6px; text-align: center; font: 400 clamp(56px, 12.6vw, 176px)/.88 var(--display); letter-spacing: -.025em; }
+.title { margin: 0; padding: 14px 0 8px; text-align: center; font: 400 clamp(38px, 6vw, 80px)/1 var(--display); letter-spacing: -.015em; }
 .strap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 9px 0; border-top: 1px solid var(--rule); border-bottom: 4px double var(--rule); font: italic 15px/1.2 var(--text); color: var(--soft); }
 .strap > span:last-child { text-align: right; }
 .strap nav { display: flex; gap: clamp(10px, 2vw, 22px); font: 700 11.5px/1 var(--label); letter-spacing: .14em; text-transform: uppercase; font-style: normal; }
@@ -49,6 +49,17 @@ main, .masthead, .colophon { max-width: var(--wrap); margin: 0 auto; padding-lef
   .strap nav { justify-content: center; flex-wrap: wrap; }
   .ears span:nth-child(2) { display: none; }
 }
+
+/* ---------- terms explained on tap ---------- */
+.term { color: inherit; text-decoration: underline dashed; text-decoration-color: var(--muted); text-decoration-thickness: 1px; text-underline-offset: 4px; cursor: help; }
+.term:hover, .term[aria-expanded="true"] { color: var(--red); text-decoration-color: var(--red); }
+.term-pop {
+  position: absolute; z-index: 20; width: min(320px, calc(100vw - 32px)); padding: 12px 14px 13px;
+  background: var(--paper); border: 1px solid var(--rule); border-top: 4px solid var(--rule); box-shadow: 5px 5px 0 var(--ink);
+  font: 400 15.5px/1.45 var(--text); color: var(--ink); text-transform: none; letter-spacing: normal;
+}
+.term-pop b { display: block; margin-bottom: 4px; font: 700 11px/1.2 var(--label); letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+.term-pop p { margin: 0; hyphens: manual; }
 
 /* ---------- headlines & body ---------- */
 .headline { margin: 0; font: 400 clamp(32px, 4vw, 48px)/1.02 var(--display); letter-spacing: -.01em; }
@@ -144,6 +155,14 @@ figcaption { padding-top: 7px; border-top: 1px solid var(--hair); margin-top: 8p
 .posts b { font: 400 22px/1.15 var(--display); }
 
 .profile__body { columns: 2 20em; column-gap: 40px; column-rule: 1px solid var(--hair); padding: 18px 0 34px; border-bottom: 1px solid var(--rule); }
+
+.cv__more { margin: -12px 0 30px; }
+
+.glossary dl { columns: 3 18em; column-gap: 36px; column-rule: 1px solid var(--hair); margin: 0; padding: 18px 0 30px; border-bottom: 1px solid var(--rule); }
+.glossary div { break-inside: avoid; margin-bottom: 14px; scroll-margin-top: 24px; }
+.glossary dt { font: 400 20px/1.15 var(--display); }
+.glossary dd { margin: 2px 0 0; font-size: 15.5px; line-height: 1.45; color: var(--soft); }
+.glossary div:target dt { color: var(--red); }
 
 .letters { text-align: center; padding: 44px 0 52px; border-bottom: 4px double var(--rule); }
 .letters h2 { margin: 0 0 10px; font: 400 clamp(38px, 6vw, 72px)/1 var(--display); }

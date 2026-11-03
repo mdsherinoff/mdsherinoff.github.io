@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mohammed Sherin</title>
-<meta name="description" content="Mohammed Sherin: final-year CS student in Doha. Projects, each with a demo you can try, laid out like a magazine.">
+<meta name="description" content="Mohammed Sherin: business analyst and consultant with a developer's background, finishing Computer Science in Doha. Every project here has a demo you can try.">
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://mdsherinoff.github.io/portfolio/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mdsherinoff.github.io/portfolio/">
 <meta property="og:title" content="Mohammed Sherin">
-<meta property="og:description" content="Final-year CS student in Doha. Every project here has a demo you can try.">
+<meta property="og:description" content="Business analyst and consultant with a developer's background, in Doha. Every project here has a demo you can try.">
 <meta property="og:image" content="https://mdsherinoff.github.io/portfolio/assets/shots/openministry.jpg">
 <meta property="og:image:width" content="1400">
 <meta property="og:image:height" content="875">
@@ -33,9 +33,9 @@
   </div>
   <h1 class="title">Mohammed Sherin</h1>
   <div class="strap">
-    <span>Software, backend &amp; civic tech</span>
+    <span>Business analysis &amp; consulting</span>
     <nav aria-label="Sections"><a href="#features">Projects</a><a href="#cv">Experience</a><a href="#writing">Writing</a><a href="#profile">Profile</a><a href="#letters">Contact</a></nav>
-    <span>Every project has a demo inside</span>
+    <span>With a developer's toolkit</span>
   </div>
 </header>
 
@@ -46,7 +46,7 @@
     <article class="lead project" id="openministry">
       <p class="kicker">Cover story · openMinistry</p>
       <h2 class="headline">A public record of what Kerala's ministers say</h2>
-      <p class="deck">Nobody kept track, so I built the archive myself: 600+ verified statements from 140 public representatives, searchable and open.</p>
+      <p class="deck">Nobody was keeping track of what politicians said in public, so I worked out what a trustworthy record would need and built it: 600+ checked statements from 140 public representatives, searchable and open to everyone.</p>
       <p class="byline">By Mohammed Sherin · Founder</p>
       <figure class="demo" data-src="https://www.openministry.live" data-kind="live" data-title="openMinistry">
         <div class="demo__chrome"><span class="url">openministry.live</span><span class="tag">Static demo</span></div>
@@ -54,8 +54,9 @@
         <figcaption>A static demo with a sample of the archive. Press play to browse it inside the page.</figcaption>
       </figure>
       <div class="cols">
-        <p class="dropcap">The pipeline starts with the news. It scrapes Kerala's papers, uses an LLM to pull out each statement made by a minister or MLA, and sends it to a human moderator before anything is published. What's approved goes to a searchable site and a public REST API.</p>
-        <p>Underneath there's a FastAPI backend, a Next.js frontend, a separate extraction service, and Celery workers on Redis. It ran on DigitalOcean with Docker and PostgreSQL. The full platform is offline for now because hosting costs money, but a static demo with a sample of the archive is still up.</p>
+        <p class="dropcap">Before any code, the question was what should count. A statement had to be a direct quote, dated, sourced and tied to one person, and nothing could go public until a person had checked it. From there the process was clear: the system reads Kerala's newspapers, an <a class="term" href="#g-ai">AI model</a> picks out what each minister or MLA said, and a moderator approves or rejects it before it reaches the site.</p>
+        <p>Approved statements go to a searchable website and an open <a class="term" href="#g-api">API</a>, so journalists and researchers can reuse the data. I designed and built all of it, from the review workflow to the servers. The full platform is offline for now because hosting costs money, but a static demo with a sample of the archive is still up.</p>
+        <p class="spec">Built with <a class="term" href="#g-python">Python</a> · <a class="term" href="#g-nextjs">Next.js</a> · <a class="term" href="#g-postgresql">PostgreSQL</a> · <a class="term" href="#g-docker">Docker</a></p>
         <p class="links"><a href="https://openministry.live" target="_blank" rel="noopener">openministry.live ↗</a> <a href="https://github.com/mdsherinoff/openMinistry" target="_blank" rel="noopener">Source ↗</a></p>
       </div>
     </article>
@@ -63,20 +64,21 @@
     <aside class="rail">
       <div class="intro-box">
         <img src="assets/avatar.png" alt="Mohammed Sherin's avatar, a pixel-art black cat" width="72" height="72">
-        <p><strong>Final-year Computer Science student at Qatar University.</strong> I build software for problems I run into, and I'm looking for software engineering, backend or civic-tech roles from <em>Summer 2027</em>.</p>
-        <p class="links"><a href="mailto:mohammedsherinofficial@gmail.com">Email</a> <a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a> <a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">LinkedIn ↗</a></p>
+        <p><strong>Final-year Computer Science student at Qatar University, moving into business analysis and consulting.</strong> I like helping people work out what they actually need, then seeing it through until it works for them.</p>
+        <p>I've built every project on this page myself, so I can talk to engineers in their terms and to everyone else in theirs. I'm looking for business analyst and consulting roles from <em>Summer 2027</em>.</p>
+        <p class="links"><a href="mailto:mohammedsherinofficial@gmail.com">Email</a> <a href="assets/mohammed-sherin-cv.pdf" target="_blank" rel="noopener">CV (PDF) ↗</a> <a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">LinkedIn ↗</a> <a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a></p>
       </div>
       <h3 class="rail__h">In this issue</h3>
       <ol class="toc">
-        <li><a href="#bingely"><span>Bingely</span><em>A cinema planner</em></a></li>
-        <li><a href="#manglish"><span>Manglish Keyboard</span><em>Malayalam on Raycast</em></a></li>
+        <li><a href="#bingely"><span>Bingely</span><em>A viewing planner</em></a></li>
+        <li><a href="#manglish"><span>Manglish Keyboard</span><em>Typing in Malayalam</em></a></li>
         <li><a href="#areyoufreeyet"><span>AreYouFreeYet</span><em>Find a free hour</em></a></li>
         <li><a href="#wc-pool"><span>Prediction Pool</span><em>The World Cup league</em></a></li>
-        <li><a href="#telefin"><span>telefin</span><em>Telegram to Jellyfin</em></a></li>
+        <li><a href="#telefin"><span>telefin</span><em>Telegram to a film library</em></a></li>
         <li><a href="#odins-garden"><span>Odin's Garden</span><em>A plant diary</em></a></li>
         <li><a href="#complyqatar"><span>ComplyQatar</span><em>In development</em></a></li>
-        <li><a href="#cv"><span>The CV, briefly</span><em>Three jobs in Doha</em></a></li>
-        <li><a href="#writing"><span>From the blog</span><em>Homelab notes</em></a></li>
+        <li><a href="#cv"><span>The CV, briefly</span><em>Three roles in Doha</em></a></li>
+        <li><a href="#writing"><span>From the blog</span><em>Home network notes</em></a></li>
       </ol>
     </aside>
   </section>
@@ -90,8 +92,8 @@
         <p class="kicker">Film · Bingely</p>
         <h3 class="headline">Stop wondering when you'll finish a show</h3>
         <p class="deck">Search a film, series or anime, say how much time you have, and get a viewing schedule built around your week.</p>
-        <p class="dropcap">I built it for people like me who start <em>One Piece</em> with no idea how long it'll take. It pulls titles and runtimes from TMDB and plans the watching around the free time you give it.</p>
-        <p class="spec">Next.js · TypeScript · Tailwind · Framer Motion · TMDB · Prisma · PostgreSQL · Clerk</p>
+        <p class="dropcap">I built it for people like me who start <em>One Piece</em> with no idea how long it'll take. It looks up each title and its running time in <a class="term" href="#g-tmdb">TMDB</a>, a public film catalogue, and fits the watching around the free time you give it.</p>
+        <p class="spec">Built with <a class="term" href="#g-nextjs">Next.js</a> · <a class="term" href="#g-typescript">TypeScript</a> · <a class="term" href="#g-postgresql">PostgreSQL</a></p>
         <p class="links"><a href="https://bingeplan.vercel.app" target="_blank" rel="noopener">bingeplan.vercel.app ↗</a> <a href="https://github.com/mdsherinoff/bingely" target="_blank" rel="noopener">Source ↗</a></p>
       </div>
       <figure class="demo" data-src="https://bingeplan.vercel.app" data-kind="live" data-title="Bingely">
@@ -101,15 +103,15 @@
       </figure>
     </article>
 
-    <blockquote class="pull">“Most of what I build starts with something that annoyed me.”</blockquote>
+    <blockquote class="pull">“Before anything gets built, I want to know who it's for and what's in their way.”</blockquote>
 
     <article class="feature feature--flip project" id="manglish">
       <div class="feature__text">
         <p class="kicker">Language · Manglish Keyboard</p>
         <h3 class="headline">Type <i>namaskaram</i>, get <span lang="ml">നമസ്കാരം</span></h3>
-        <p class="deck">Malayalam had nothing on Raycast, so I wrote an extension for it, and it passed the store review. It's <a href="https://www.raycast.com/mohammed_sherin_mohammed/manglish-keyboard" target="_blank" rel="noopener">on the Raycast Store</a>.</p>
-        <p class="dropcap">You type English phonetics and get Malayalam script, ready to copy or paste into the app you're in. The demo runs the extension's own transliteration code against the same Google service, so what you type here is what you'd get in Raycast.</p>
-        <p class="spec">TypeScript · React · Raycast API</p>
+        <p class="deck">There was no way to type Malayalam in <a class="term" href="#g-raycast">Raycast</a>, so I wrote one, and it passed the store review. It's <a href="https://www.raycast.com/mohammed_sherin_mohammed/manglish-keyboard" target="_blank" rel="noopener">on the Raycast Store</a>.</p>
+        <p class="dropcap">You type Malayalam words the way they sound in English letters and get Malayalam script, ready to paste into whatever app you're in. The demo runs the extension's own code against the same Google service, so what you type here is what you'd get in Raycast.</p>
+        <p class="spec">Built with <a class="term" href="#g-typescript">TypeScript</a> · <a class="term" href="#g-react">React</a></p>
         <p class="links"><a href="https://www.raycast.com/mohammed_sherin_mohammed/manglish-keyboard" target="_blank" rel="noopener">Install on Raycast ↗</a> <a href="https://github.com/mdsherinoff/manglish-keyboard" target="_blank" rel="noopener">Source ↗</a></p>
       </div>
       <figure class="demo" data-src="demos/manglish/" data-kind="real" data-title="Manglish Keyboard">
@@ -124,8 +126,8 @@
         <p class="kicker">Scheduling · AreYouFreeYet</p>
         <h3 class="headline">Find the hour when everyone is actually free</h3>
         <p class="deck">Add your week, add your friends or send them a link, and see where everyone overlaps, even across time zones.</p>
-        <p class="dropcap">Block out classes by hand or import a calendar file, and everyone's events line up on one grid in whichever time zone you're viewing from. There are no accounts and no server: the whole plan is compressed into the share link itself. This isn't a demo version. It's the actual app, built and hosted here, and it opens on a sample plan with four people in Doha, India and London.</p>
-        <p class="spec">Next.js · TypeScript · Tailwind · ical.js · pako · date-fns-tz</p>
+        <p class="dropcap">Block out classes by hand or import a calendar file, and everyone's plans line up on one grid in whichever time zone you're viewing from. There are no accounts to create and nothing is stored on a server: the whole plan travels inside the share link. This isn't a demo version. It's the actual app, hosted here, opening on a sample plan with four people in Doha, India and London.</p>
+        <p class="spec">Built with <a class="term" href="#g-nextjs">Next.js</a> · <a class="term" href="#g-typescript">TypeScript</a></p>
         <p class="links"><a href="https://areyoufreeyet.vercel.app/" target="_blank" rel="noopener">areyoufreeyet.vercel.app ↗</a> <a href="https://github.com/mdsherinoff/areyoufreeyet" target="_blank" rel="noopener">Source ↗</a></p>
       </div>
       <figure class="demo" data-src="demos/areyoufreeyet/#s=eJyVk81uwjAQhF8F7dmIOAkp5MaBVhU_VdXeKg5uskEWiR3ZThFFvHvllIpgQ2mP2dj7zc6s96BRay7FYw4p1FKZQpZc9nOsJBCoUdYlQvq2B24P2HKfAgHBKoQUFggEDK_wUwr7PdGcDZ6ZYQoI4AcKo53LYXvB2KawRLOVaqN7JWamUW2vXW3_KMwapbhYA4Gc7WyTgIQrAtowZV55Cw-GaRBYjsh_KiNbOZAuMOoAX2RhtkxhbyrWXCAeCdehlEQOlAYulIZp5ELjDnTGxVr3Fkxx8fuEiTtf4qHidr7VOWx4yuOeKa7_G0nSETtn7zdSoCT0TAnGnlLqJ3HX4Tzsqr9wSEyGxPWFernTpI3A8WV08mVSVc0FW2ay3DDDrhkz7gh-Kgqe3drQo2bXndiqu7Ayjl4anAQvWc7ZueJpo2SNg7kUuRTXJFPaDfP7Welb78pX7OcZHTdvdfgCbIBILA" data-kind="real" data-title="AreYouFreeYet">
@@ -140,8 +142,8 @@
         <p class="kicker">Sport · World Cup Prediction Pool</p>
         <h3 class="headline">Twenty friends, 104 matches, one leaderboard</h3>
         <p class="deck">A prediction league I built and ran for friends and family through the 2026 World Cup, with daily standings and charts.</p>
-        <p class="dropcap">Groups score only on the exact scoreline. Knockouts pay a point for the winner and two more for the score, and there's a bracket and awards on top. Results synced from football-data.org, with an admin fallback for when they didn't. The demo runs the app's real scoring code on its own fixtures, with simulated results and a made-up group chat.</p>
-        <p class="spec">Next.js · TypeScript · Prisma · PostgreSQL · NextAuth</p>
+        <p class="dropcap">Getting twenty people to agree on the rules came first. Group matches score only on the exact scoreline; knockouts pay a point for the winner and two more for the score, with a bracket and awards on top. Results came in automatically from a football data service, with a manual fallback for the days it failed. The demo runs the app's real scoring code with simulated results and a made-up group chat.</p>
+        <p class="spec">Built with <a class="term" href="#g-nextjs">Next.js</a> · <a class="term" href="#g-typescript">TypeScript</a> · <a class="term" href="#g-postgresql">PostgreSQL</a></p>
         <p class="links"><a href="https://github.com/mdsherinoff/wc-prediction-game" target="_blank" rel="noopener">Source ↗</a></p>
       </div>
       <figure class="demo" data-src="demos/wc-pool/" data-kind="real" data-title="WC26 Prediction Pool">
@@ -153,40 +155,40 @@
 
     <div class="pair">
       <article class="project short" id="telefin">
-        <p class="kicker">Homelab · telefin</p>
-        <h3 class="headline">Forward a film on Telegram. Watch it in Jellyfin.</h3>
-        <p>A userbot rather than a bot, so it gets around the 20 MB limit and handles files up to 4 GB. It hands each download to Sonarr or Radarr, and Jellyfin picks it up. The demo is a simulation on the bot's real rules and messages.</p>
+        <p class="kicker">Home media · telefin</p>
+        <h3 class="headline">Forward a film on Telegram. Watch it on the TV.</h3>
+        <p>I wanted adding a film to my home library to be as easy as forwarding a message. telefin signs in as a regular Telegram account rather than a bot, which lifts the file limit from 20 MB to 4 GB, then files each download so <a class="term" href="#g-jellyfin">Jellyfin</a> picks it up. The demo is a simulation using its real rules and messages.</p>
         <figure class="demo" data-src="demos/telefin/" data-kind="sim" data-title="telefin">
           <div class="demo__chrome"><span class="url">Telegram → Jellyfin</span><span class="tag">Simulation</span></div>
           <div class="demo__stage"><img src="assets/shots/telefin.jpg" alt="A Telegram chat downloading a film beside a server log" loading="lazy" width="1280" height="800"><button class="play">Try it here</button></div>
         </figure>
-        <p class="spec">Python · Telethon · SQLite · Docker · <a href="https://github.com/mdsherinoff/telefin" target="_blank" rel="noopener">Source ↗</a></p>
+        <p class="spec">Built with <a class="term" href="#g-python">Python</a> · <a class="term" href="#g-docker">Docker</a> · <a href="https://github.com/mdsherinoff/telefin" target="_blank" rel="noopener">Source ↗</a></p>
       </article>
       <article class="project short" id="odins-garden">
         <p class="kicker">Gardening · Odin's Garden</p>
         <h3 class="headline">A diary for your plants, a dictionary for the rest</h3>
-        <p>A Flutter app for logging plants with photos and dated notes. Its dictionary searches GBIF and reads Wikipedia for care hints, pests and toxicity. The demo is that tab ported to the web, with the same requests and the same rules.</p>
+        <p>A phone app for logging plants with photos and dated notes. Its dictionary looks plants up in <a class="term" href="#g-gbif">GBIF</a> and reads Wikipedia for care tips, pests and whether they're toxic. The demo is that tab rebuilt for the web, with the same lookups and the same rules.</p>
         <figure class="demo" data-src="demos/odins-garden/" data-kind="real" data-title="Odin's Garden">
           <div class="demo__chrome"><span class="url">Odin's Garden · Dictionary</span><span class="tag">Live data</span></div>
           <div class="demo__stage"><img src="assets/shots/odins-garden.jpg" alt="The Monstera deliciosa page in Odin's Garden's dictionary" loading="lazy" width="1280" height="800"><button class="play">Try it here</button></div>
         </figure>
-        <p class="spec">Flutter · Dart · GBIF · Wikipedia · <a href="https://github.com/mdsherinoff/odins-garden" target="_blank" rel="noopener">Source ↗</a></p>
+        <p class="spec">Built with <a class="term" href="#g-flutter">Flutter</a> · <a href="https://github.com/mdsherinoff/odins-garden" target="_blank" rel="noopener">Source ↗</a></p>
       </article>
     </div>
 
     <article class="notice" id="complyqatar">
       <p class="kicker">In development · ComplyQatar</p>
       <h3 class="headline">Every licence, permit and contract a company holds, with a warning before any of them lapse</h3>
-      <p>A multi-tenant app for companies in Qatar: red, amber and green status by location, renewal alerts, and a document vault. Freemium, with a first rollout planned at Transind Holding. It's still being built and is private, so there's no demo here. <a href="#letters">Ask me for a walkthrough.</a></p>
-      <p class="spec">Next.js · TypeScript · Supabase / PostgreSQL with row-level security · Drizzle</p>
+      <p>Companies in Qatar keep track of trade licences, permits and contracts across several sites, and a lapsed one can mean fines. ComplyQatar gives each company one place for all of them: red, amber and green status by location, renewal reminders, and somewhere to keep the documents. It will be free to start, with a first rollout planned at Transind Holding. It's still being built and is private, so there's no demo here. <a href="#letters">Ask me for a walkthrough.</a></p>
+      <p class="spec">Built with <a class="term" href="#g-nextjs">Next.js</a> · <a class="term" href="#g-typescript">TypeScript</a> · <a class="term" href="#g-postgresql">PostgreSQL</a></p>
     </article>
 
     <section class="brief" aria-label="In brief">
       <h3 class="rail__h">In brief</h3>
       <ul>
-        <li><a href="https://github.com/mdsherinoff/cmps350-project" target="_blank" rel="noopener"><b>Course Management System.</b></a> A team project in Next.js and Prisma with student, instructor and admin roles.</li>
-        <li><a href="https://github.com/mdsherinoff/SalesPipelineCRM" target="_blank" rel="noopener"><b>Sales Pipeline CRM.</b></a> Oracle APEX, built during my Mannai internship.</li>
-        <li><b>Timeflict 3D.</b> A Unity game by a team of three. I did the mechanics and scripted events.</li>
+        <li><a href="https://github.com/mdsherinoff/cmps350-project" target="_blank" rel="noopener"><b>Course Management System.</b></a> A team project: one system for students, instructors and admins, each seeing what their role needs.</li>
+        <li><a href="https://github.com/mdsherinoff/SalesPipelineCRM" target="_blank" rel="noopener"><b>Sales Pipeline CRM.</b></a> A <a class="term" href="#g-crm">CRM</a> for tracking sales deals, built during my Mannai internship.</li>
+        <li><b>Timeflict 3D.</b> A game made by a team of three. I did the gameplay and the scripted events.</li>
       </ul>
     </section>
   </section>
@@ -196,11 +198,12 @@
     <section class="cv" id="cv" aria-labelledby="cv-h">
       <h2 class="section-label" id="cv-h"><span>The CV, briefly</span></h2>
       <div class="cv__cols">
-        <article><p class="kicker">Sep 2026 — now</p><h3>Kings Marine</h3><p class="role">Web Development Consultant</p><p>I advise management on the company's online presence, lead the WordPress redesign, and improve the online shop.</p></article>
-        <article><p class="kicker">Jun — Aug 2026</p><h3>Mannai InfoTech</h3><p class="role">Software Developer Intern</p><p>I built a sales pipeline CRM on Oracle APEX with funnel dashboards and role-based security, and wired FastAPI, RabbitMQ and Kafka into it.</p></article>
+        <article><p class="kicker">Sep 2026 — now</p><h3>Kings Marine</h3><p class="role">Web Development Consultant</p><p>I advise management on the company's online presence: scoping and prioritising what to improve, and laying out the options and trade-offs before anything is built. I also lead the website redesign and make the online shop easier to buy from.</p></article>
+        <article><p class="kicker">Jun — Aug 2026</p><h3>Mannai InfoTech</h3><p class="role">Software Developer Intern</p><p>I built a <a class="term" href="#g-crm">CRM</a> that gave the sales team one view of every lead and deal, with dashboards showing how many deals move through each stage, access limited by role, and automatic follow-up reminders.</p></article>
         <article><p class="kicker">Dec 2025 — Jan 2026</p><h3>Simple Logic</h3><p class="role">Networks / IT Support Intern</p><p>I kept the network and IT running for 9 Safari Supermarket outlets and malls across Qatar.</p></article>
-        <article><p class="kicker">2023 — May 2027</p><h3>Qatar University</h3><p class="role">BSc Computer Science</p><p>Software engineering, databases, networks, web development, game design. CCNA: Introduction to Networks, Jan 2026.</p></article>
+        <article><p class="kicker">2023 — May 2027</p><h3>Qatar University</h3><p class="role">BSc Computer Science</p><p>Project management, principles of management, software engineering, databases, networks, web development. <a class="term" href="#g-ccna">CCNA</a>: Introduction to Networks, Jan 2026.</p></article>
       </div>
+      <p class="links cv__more"><a href="assets/mohammed-sherin-cv.pdf" target="_blank" rel="noopener">Download the full CV (PDF) ↗</a></p>
     </section>
 
     <section class="writing" id="writing" aria-labelledby="writing-h">
@@ -217,17 +220,38 @@
     <section class="profile" id="profile" aria-labelledby="profile-h">
       <h2 class="section-label" id="profile-h"><span>Profile</span></h2>
       <div class="profile__body">
-        <p class="dropcap">I'm from Kerala and live in Doha, in my last year of Computer Science at Qatar University. I watch a lot of films, mostly big, patient sci-fi like Nolan and Villeneuve, and quieter, carefully framed films like Wes Anderson's and A24's. That habit is behind half of these projects: Bingely plans what I watch, and telefin keeps my Jellyfin server stocked.</p>
-        <p>Outside of that: Barça, a World Cup prediction league I take far too seriously, and homelab notes on <a href="https://mdsherinoff.github.io" target="_blank" rel="noopener">my blog</a>. I speak Malayalam and English, and some Hindi, Tamil and Spanish.</p>
+        <p class="dropcap">I'm from Kerala and live in Doha, in my last year of Computer Science at Qatar University. I watch a lot of films, mostly big, patient sci-fi like Nolan and Villeneuve, and quieter, carefully framed films like Wes Anderson's and A24's. That habit is behind half of these projects: Bingely plans what I watch, and telefin keeps my home film library stocked.</p>
+        <p>Outside of that: Barça, a World Cup prediction league I take far too seriously, and notes on running my home network on <a href="https://mdsherinoff.github.io" target="_blank" rel="noopener">my blog</a>. I speak Malayalam and English, and some Hindi, Tamil and Spanish.</p>
       </div>
+    </section>
+
+    <section class="glossary" id="glossary" aria-labelledby="glossary-h">
+      <h2 class="section-label" id="glossary-h"><span>Glossary</span></h2>
+      <dl>
+        <div id="g-ai"><dt>AI model</dt><dd>Software trained on huge amounts of text that can read an article and pull out who said what. Here it does the first pass, and a person makes the final call.</dd></div>
+        <div id="g-api"><dt>API</dt><dd>A way for other software to ask for the data directly, so journalists and researchers can build on it without copying from the website.</dd></div>
+        <div id="g-ccna"><dt>CCNA</dt><dd>Cisco Certified Network Associate, a widely recognised certificate in how computer networks work. Introduction to Networks is its first course.</dd></div>
+        <div id="g-crm"><dt>CRM</dt><dd>Customer relationship management: a system for tracking customers and sales deals from first contact to signed contract.</dd></div>
+        <div id="g-docker"><dt>Docker</dt><dd>A way to package an app with everything it needs, so it runs the same on any server.</dd></div>
+        <div id="g-flutter"><dt>Flutter</dt><dd>Google's toolkit for building one app that runs on both iPhone and Android.</dd></div>
+        <div id="g-gbif"><dt>GBIF</dt><dd>The Global Biodiversity Information Facility, an open database of the world's plant and animal species.</dd></div>
+        <div id="g-jellyfin"><dt>Jellyfin</dt><dd>Free software that turns a home computer into your own Netflix, streaming the films and shows you keep on it to any screen in the house.</dd></div>
+        <div id="g-nextjs"><dt>Next.js</dt><dd>A popular framework for building websites and web apps, used by companies like Netflix and TikTok.</dd></div>
+        <div id="g-postgresql"><dt>PostgreSQL</dt><dd>A widely used database: where an app keeps its records so they stay safe, consistent and searchable.</dd></div>
+        <div id="g-python"><dt>Python</dt><dd>A general-purpose programming language, common for servers, automation and working with data.</dd></div>
+        <div id="g-raycast"><dt>Raycast</dt><dd>A launcher for the Mac: press a shortcut, type what you want, and it does it. Anyone can publish extensions to its store after a review.</dd></div>
+        <div id="g-react"><dt>React</dt><dd>A widely used library for building interactive screens out of reusable pieces.</dd></div>
+        <div id="g-tmdb"><dt>TMDB</dt><dd>The Movie Database, a free, community-built catalogue of films and series that apps can look things up in.</dd></div>
+        <div id="g-typescript"><dt>TypeScript</dt><dd>JavaScript, the language of the web, with checks that catch many mistakes before the code runs.</dd></div>
+      </dl>
     </section>
   </section>
 
   <section class="letters" id="letters" aria-labelledby="letters-h">
     <h2 id="letters-h">Letters to the editor</h2>
-    <p>Hiring for summer 2027, want a walkthrough of ComplyQatar, or have a film recommendation? Write in.</p>
+    <p>Hiring a business analyst or consultant for summer 2027, want a walkthrough of ComplyQatar, or have a film recommendation? Write in.</p>
     <p class="addr"><a href="mailto:mohammedsherinofficial@gmail.com">mohammedsherinofficial@gmail.com</a></p>
-    <p class="links"><a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a> <a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">LinkedIn ↗</a></p>
+    <p class="links"><a href="assets/mohammed-sherin-cv.pdf" target="_blank" rel="noopener">CV (PDF) ↗</a> <a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">LinkedIn ↗</a> <a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a></p>
   </section>
 
 </main>

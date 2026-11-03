@@ -16,6 +16,7 @@ Plain HTML, CSS and a few lines of JS. No framework and no build step.
   - `odins-garden/`: the Flutter app's Dictionary tab ported to the web: same GBIF and Wikipedia requests, same keyword extraction
 - `writing/`: blog posts copied from the Hugo blog (`my-blog` repo) by `scripts/import_blog.py`; the blog stays the original and each copy links back to it
 - `assets/avatar.png`: my GitHub avatar, used as the logo and favicon
+- `assets/mohammed-sherin-cv.pdf`: the CV the page links to; replace the file to update it
 - `archive/`: earlier designs (2D VHS, 3D store, the first one-page "programme" layout) and retired demos (Ringlog, Language Sort)
 
 openMinistry and Bingely are embedded straight from their live sites.
