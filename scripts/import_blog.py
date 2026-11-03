@@ -135,32 +135,26 @@ PAGE = """<!doctype html>
 <title>{title} · Mohammed Sherin</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{canonical}">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <link rel="icon" href="../../assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Display&family=Libre+Franklin:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../editorial.css">
 </head>
 <body>
-<header class="bar">
-  <a class="mark" href="../../"><img src="../../assets/avatar.png" alt="" width="28" height="28">Mohammed Sherin</a>
-  <nav aria-label="Sections">
-    <a href="../../#work">Projects</a>
-    <a href="../../#writing">Writing</a>
-    <a href="../../#about">About</a>
-    <a href="../../#contact">Contact</a>
-  </nav>
+<header class="masthead masthead--slim">
+  <div class="ears"><a href="../../">Mohammed Sherin</a><span>From the blog</span><a href="../../#writing">More writing</a></div>
 </header>
 <main class="post">
-  <p class="eyebrow"><a href="../../#writing">Writing</a> · <time datetime="{iso}">{date}</time> · {minutes} min read</p>
-  <h1>{title}</h1>
+  <p class="kicker">From the blog · <time datetime="{iso}">{date}</time> · {minutes} min read</p>
+  <h1 class="headline">{title}</h1>
+  <p class="byline">By Mohammed Sherin</p>
   <div class="post__body">
 {body}
   </div>
-  <p class="post__foot">First published on <a href="{canonical}" target="_blank" rel="noopener">my blog ↗</a> · <a href="../../#writing">More writing</a></p>
+  <p class="post__foot">First published on <a href="{canonical}" target="_blank" rel="noopener">my blog ↗</a> · <a href="../../#writing">More writing</a> · <a href="../../">Back to the front page</a></p>
 </main>
-<footer class="foot"><p>Mohammed Sherin · Doha</p><p><a href="../../">Back to the portfolio</a></p></footer>
 <script>
 document.querySelectorAll("pre .copy").forEach((b) => b.addEventListener("click", async () => {{
   try {{ await navigator.clipboard.writeText(b.previousElementSibling.textContent); b.textContent = "Copied"; }} catch {{ b.textContent = "Select and copy"; }}
@@ -200,14 +194,13 @@ def main() -> None:
 
     posts.sort(key=lambda p: p["when"], reverse=True)
     items = "\n".join(
-        f'      <li><a href="writing/{p["slug"]}/"><time datetime="{p["when"].date().isoformat()}">{p["date"]}</time>'
-        f'<span class="t">{html.escape(p["title"])}</span><span class="s">{html.escape(p["summary"])}</span>'
-        f'<span class="m">{p["minutes"]} min</span></a></li>'
+        f'        <li><a href="writing/{p["slug"]}/"><time datetime="{p["when"].date().isoformat()}">{p["date"]}</time>'
+        f'<b>{html.escape(p["title"])}</b></a></li>'
         for p in posts
     )
     index = ROOT / "index.html"
     page = index.read_text()
-    page, n = re.subn(r"(<!-- writing:start -->).*?(<!-- writing:end -->)", lambda m: f"{m.group(1)}\n{items}\n      {m.group(2)}", page, flags=re.S)
+    page, n = re.subn(r"(<!-- writing:start -->).*?(<!-- writing:end -->)", lambda m: f"{m.group(1)}\n{items}\n        {m.group(2)}", page, flags=re.S)
     if not n:
         raise SystemExit("index.html has no <!-- writing:start --> marker")
     index.write_text(page)

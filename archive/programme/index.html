@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base href="../../">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mohammed Sherin</title>
+<meta name="description" content="Mohammed Sherin: final-year CS student at Qatar University. Software, backend and civic tech. Every project here has a demo you can try.">
+<meta property="og:title" content="Mohammed Sherin">
+<meta property="og:description" content="Final-year CS student in Doha. Every project here has a demo you can try.">
+<meta property="og:image" content="assets/shots/openministry.jpg">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/avatar.png">
+<link rel="apple-touch-icon" href="assets/avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="bar">
+  <a class="mark" href="#top"><img src="assets/avatar.png" alt="" width="28" height="28">Mohammed Sherin</a>
+  <nav aria-label="Sections">
+    <a href="#work">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#writing">Writing</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="intro">
+    <p class="eyebrow">Portfolio · Doha · 2026</p>
+    <h1>Mohammed Sherin</h1>
+    <p class="lede">Final-year Computer Science student at Qatar University. I build software for problems I run into, from a public record of what Kerala's ministers say to the tools that run my home cinema. <em>Every project below has a demo you can try.</em></p>
+    <dl class="facts">
+      <div><dt>Studying</dt><dd>BSc Computer Science, Qatar University, graduating May 2027</dd></div>
+      <div><dt>Looking for</dt><dd>Full-time or internship roles from Summer 2027: software engineering, backend, civic tech</dd></div>
+      <div><dt>Works in</dt><dd>Python, TypeScript, SQL · FastAPI, Next.js, PostgreSQL, Docker</dd></div>
+    </dl>
+    <p class="links">
+      <a href="mailto:mohammedsherinofficial@gmail.com">mohammedsherinofficial@gmail.com</a>
+      <a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </p>
+  </section>
+
+  <section class="work" id="work" aria-labelledby="work-h">
+    <div class="section-head">
+      <h2 id="work-h">Projects</h2>
+      <p>Seven features, each with something to try. Live sites are embedded as they are. Where a project can't run in a browser, there's a demo built from its real code, and each one says which kind it is.</p>
+    </div>
+
+    <article class="project" id="openministry">
+      <div class="project__text">
+        <p class="num">01</p>
+        <h3>openMinistry</h3>
+        <p class="logline">A public archive of what Kerala's ministers and MLAs say on the record.</p>
+        <p>It scrapes the news, uses an LLM to pull out each statement, sends it to a human moderator, and then publishes it to a searchable site and a public REST API. 600+ verified statements from 140 public representatives. The full platform is offline for now because hosting costs money, but a static demo with a sample of the archive is still up.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Founder, built it end to end</dd></div>
+          <div><dt>Stack</dt><dd>FastAPI, Next.js, PostgreSQL, Redis, Celery, Docker, DigitalOcean</dd></div>
+          <div><dt>Links</dt><dd><a href="https://openministry.live" target="_blank" rel="noopener">openministry.live ↗</a> <a href="https://github.com/mdsherinoff/openMinistry" target="_blank" rel="noopener">source ↗</a></dd></div>
+        </dl>
+      </div>
+      <figure class="demo" data-src="https://www.openministry.live" data-kind="live">
+        <div class="demo__chrome"><span class="dots"></span><span class="url">openministry.live</span><span class="tag tag--live">Live site</span></div>
+        <div class="demo__stage"><img src="assets/shots/openministry.jpg" alt="openMinistry's statements page, showing verified quotes from Kerala ministers with topic tags and source links" loading="lazy" width="1400" height="875"><button class="play">Try it here</button></div>
+      </figure>
+    </article>
+
+    <article class="project" id="bingely">
+      <div class="project__text">
+        <p class="num">02</p>
+        <h3>Bingely</h3>
+        <p class="logline">Stop wondering when you'll finish a show. Start watching with a plan.</p>
+        <p>Search a film, series or anime, tell it how much time you have, and it builds a viewing schedule around your week. It's for people like me who start <em>One Piece</em> with no idea how long it'll take.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Solo build</dd></div>
+          <div><dt>Stack</dt><dd>Next.js, TypeScript, Tailwind, Framer Motion, TMDB API, Prisma, PostgreSQL, Clerk</dd></div>
+          <div><dt>Links</dt><dd><a href="https://bingeplan.vercel.app" target="_blank" rel="noopener">bingeplan.vercel.app ↗</a> <a href="https://github.com/mdsherinoff/bingely" target="_blank" rel="noopener">source ↗</a></dd></div>
+        </dl>
+      </div>
+      <figure class="demo" data-src="https://bingeplan.vercel.app" data-kind="live">
+        <div class="demo__chrome"><span class="dots"></span><span class="url">bingeplan.vercel.app</span><span class="tag tag--live">Live site</span></div>
+        <div class="demo__stage"><img src="assets/shots/bingely.jpg" alt="Bingely's home page: 'Your personal cinema planner' with a search box and example titles" loading="lazy" width="1400" height="875"><button class="play">Try it here</button></div>
+      </figure>
+    </article>
+
+    <article class="project" id="manglish">
+      <div class="project__text">
+        <p class="num">03</p>
+        <h3>Manglish Keyboard</h3>
+        <p class="logline">Type <em>namaskaram</em>, get <span lang="ml">നമസ്കാരം</span>.</p>
+        <p>A Raycast extension that turns English phonetics into Malayalam script. Malayalam had nothing on Raycast, so I made it, and it passed the Raycast Store review. The demo runs the extension's own transliteration code against the same Google Input Tools service, so what you type here is what you'd get in Raycast.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Solo build, published on the Raycast Store</dd></div>
+          <div><dt>Stack</dt><dd>TypeScript, React, Raycast API</dd></div>
+          <div><dt>Links</dt><dd><a href="https://github.com/mdsherinoff/manglish-keyboard" target="_blank" rel="noopener">source ↗</a></dd></div>
+        </dl>
+      </div>
+      <figure class="demo" data-src="demos/manglish/" data-kind="real">
+        <div class="demo__chrome"><span class="dots"></span><span class="url">Raycast · Type in Manglish</span><span class="tag tag--real">Real code, web port</span></div>
+        <div class="demo__stage"><img src="assets/shots/manglish.jpg" alt="A Raycast-style window turning 'namaskaram' into Malayalam script" loading="lazy" width="1280" height="800"><button class="play">Try it here</button></div>
+      </figure>
+    </article>
+
+    <article class="project" id="wc-pool">
+      <div class="project__text">
+        <p class="num">04</p>
+        <h3>World Cup Prediction Pool</h3>
+        <p class="logline">Predict every match. Settle the bragging rights.</p>
+        <p>I built it for 20 friends and family for the 2026 World Cup and ran it across all 104 matches: exact scorelines in the groups, winners plus a score bonus in the knockouts, a bracket predictor, awards, and daily standings and charts. Results synced from football-data.org, with an admin fallback for when they didn't. The demo uses the app's real scoring code on its own fixtures. The results are simulated, so you play them out against a made-up group chat.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Built it and ran it</dd></div>
+          <div><dt>Stack</dt><dd>Next.js, TypeScript, Prisma, PostgreSQL, NextAuth (Google sign-in)</dd></div>
+          <div><dt>Links</dt><dd><a href="https://github.com/mdsherinoff/wc-prediction-game" target="_blank" rel="noopener">source ↗</a></dd></div>
+        </dl>
+      </div>
+      <figure class="demo" data-src="demos/wc-pool/" data-kind="real">
+        <div class="demo__chrome"><span class="dots"></span><span class="url">WC26 Prediction Pool</span><span class="tag tag--real">Real scoring, simulated results</span></div>
+        <div class="demo__stage"><img src="assets/shots/wc-pool.jpg" alt="The WC26 Prediction Pool page with scoreline predictions entered for five matches" loading="lazy" width="1280" height="800"><button class="play">Try it here</button></div>
+      </figure>
+    </article>
+
+
+    <article class="project" id="telefin">
+      <div class="project__text">
+        <p class="num">05</p>
+        <h3>telefin</h3>
+        <p class="logline">Some films only survive on Telegram. Forward one, and it turns up in Jellyfin.</p>
+        <p>A Telegram userbot rather than a bot, which gets it around the 20 MB bot limit and lets it handle files up to 4 GB. It downloads the file, hands it to Sonarr or Radarr to rename and import, and Jellyfin picks it up. It needs a Telegram account and a media server, so the demo is a simulation built on the bot's real rules and messages: TV detection, allowed file types, duplicates and progress.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Solo build</dd></div>
+          <div><dt>Stack</dt><dd>Python, Telethon (MTProto), SQLite, Docker</dd></div>
+          <div><dt>Links</dt><dd><a href="https://github.com/mdsherinoff/telefin" target="_blank" rel="noopener">source ↗</a></dd></div>
+        </dl>
+      </div>
+      <figure class="demo" data-src="demos/telefin/" data-kind="sim">
+        <div class="demo__chrome"><span class="dots"></span><span class="url">Telegram → telefin → Jellyfin</span><span class="tag tag--sim">Simulation</span></div>
+        <div class="demo__stage"><img src="assets/shots/telefin.jpg" alt="A Telegram chat where a forwarded film is downloading, next to a server log and a Jellyfin shelf" loading="lazy" width="1280" height="800"><button class="play">Try it here</button></div>
+      </figure>
+    </article>
+
+    <article class="project" id="odins-garden">
+      <div class="project__text">
+        <p class="num">06</p>
+        <h3>Odin's Garden</h3>
+        <p class="logline">A diary for your plants, and a dictionary for the ones you haven't met.</p>
+        <p>A Flutter app for keeping a record of your plants with photos and dated observations. Its dictionary looks up any species: it searches GBIF, pulls a summary and photo from Wikipedia, and reads the article for care hints, pests, diseases and toxicity. The demo is that Dictionary tab ported to the web, making the same requests and running the same extraction rules.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Solo build</dd></div>
+          <div><dt>Stack</dt><dd>Flutter, Dart, GBIF API, Wikipedia API</dd></div>
+          <div><dt>Links</dt><dd><a href="https://github.com/mdsherinoff/odins-garden" target="_blank" rel="noopener">source ↗</a></dd></div>
+        </dl>
+      </div>
+      <figure class="demo" data-src="demos/odins-garden/" data-kind="real">
+        <div class="demo__chrome"><span class="dots"></span><span class="url">Odin's Garden · Dictionary</span><span class="tag tag--real">Real logic, live data</span></div>
+        <div class="demo__stage"><img src="assets/shots/odins-garden.jpg" alt="Odin's Garden dictionary page for Monstera deliciosa with a photo, toxicity warning and description" loading="lazy" width="1280" height="800"><button class="play">Try it here</button></div>
+      </figure>
+    </article>
+
+
+    <article class="project project--nodemo" id="complyqatar">
+      <div class="project__text">
+        <p class="num">07</p>
+        <h3>ComplyQatar</h3>
+        <p class="logline">Every licence, permit and contract a Qatar company holds, with a warning before any of them lapse.</p>
+        <p>A multi-tenant app that tracks licences, permits and contracts by location, with red, amber and green status, renewal alerts and a document vault. Freemium, so small businesses can start for free. The first rollout is planned with Transind Holding. It's in production and the code is private, so there's no public demo yet. Ask me and I'll walk you through it.</p>
+        <dl class="credits">
+          <div><dt>Role</dt><dd>Founder</dd></div>
+          <div><dt>Stack</dt><dd>Next.js, TypeScript, Supabase / PostgreSQL with row-level security, Drizzle</dd></div>
+          <div><dt>Status</dt><dd>In production</dd></div>
+        </dl>
+      </div>
+    </article>
+
+    <div class="also">
+      <h3>Also on the reel</h3>
+      <ul>
+        <li><a href="https://github.com/mdsherinoff/cmps350-project" target="_blank" rel="noopener">Course Management System</a><span>A university team project with separate roles for students, instructors and admins, plus reporting.</span><em>Next.js, Prisma, NextAuth</em></li>
+        <li><a href="https://github.com/mdsherinoff/SalesPipelineCRM" target="_blank" rel="noopener">Sales Pipeline CRM</a><span>Leads, opportunities, activity logging and funnel dashboards, built during my Mannai internship.</span><em>Oracle APEX</em></li>
+        <li><span class="nolink">Timeflict 3D</span><span>A Unity game made by a team of three. I did the gameplay mechanics and scripted events.</span><em>Unity 6, C#</em></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="experience" id="experience" aria-labelledby="exp-h">
+    <div class="section-head"><h2 id="exp-h">Experience</h2></div>
+    <ol class="roles">
+      <li>
+        <p class="when">Sep 2026 — now</p>
+        <div><h3>Web Development Consultant <span>Kings Marine, Doha</span></h3>
+        <p>I advise management on the company's online presence: scoping requests, ranking them, and laying out the options before anything is built. I'm also leading the WordPress redesign and improving the online shop.</p></div>
+      </li>
+      <li>
+        <p class="when">Jun — Aug 2026</p>
+        <div><h3>Software Developer Intern <span>Mannai InfoTech, Doha</span></h3>
+        <p>I built a sales pipeline CRM on Oracle APEX covering leads, opportunities and activity logging, with funnel dashboards, role-based security and follow-up reminders. I also wired a FastAPI service with RabbitMQ and Kafka into APEX.</p></div>
+      </li>
+      <li>
+        <p class="when">Dec 2025 — Jan 2026</p>
+        <div><h3>Networks / IT Support Intern <span>Simple Logic, Doha</span></h3>
+        <p>I kept the network and day-to-day IT running for 9 Safari Supermarket outlets and malls, fixing hardware and connectivity faults on site.</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="writing" id="writing" aria-labelledby="writing-h">
+    <div class="section-head">
+      <h2 id="writing-h">Writing</h2>
+      <p>Notes from my homelab, copied over from <a href="https://mdsherinoff.github.io" target="_blank" rel="noopener">my blog ↗</a>, which is still where they're first published.</p>
+    </div>
+    <ul class="posts">
+      <!-- writing:start -->
+      <li><a href="writing/exitnode-athome/"><time datetime="2026-05-27">27 May 2026</time><span class="t">How I setup Exit Node through my Home Network</span><span class="s">I managed to do this through Tailscale.</span><span class="m">1 min</span></a></li>
+      <li><a href="writing/accesshome-anywhere/"><time datetime="2026-04-05">5 Apr 2026</time><span class="t">How I Access My Home Network from Anywhere in The World</span><span class="s">First setup Tailscale, follow my short and simple guide here: How I Access My Home Network from Anywhere in The World After you are done with that,…</span><span class="m">1 min</span></a></li>
+      <li><a href="writing/accessserver-tailscale/"><time datetime="2026-04-05">5 Apr 2026</time><span class="t">How I Access My Home Server from Anywhere in The World</span><span class="s">I started by creating an Ubuntu container inside my Proxmox Environment.</span><span class="m">1 min</span></a></li>
+      <li><a href="writing/myfirstpost/"><time datetime="2026-04-05">5 Apr 2026</time><span class="t">My First Post</span><span class="s">Hello World This is my puny attempt at creating a Blog.</span><span class="m">1 min</span></a></li>
+      <!-- writing:end -->
+    </ul>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-h">
+    <div class="section-head"><h2 id="about-h">About</h2></div>
+    <div class="about__cols">
+      <div class="about__text">
+        <p>I'm from Kerala and live in Doha. I'm in my last year of Computer Science at Qatar University.</p>
+        <p>I watch a lot of films, mostly big, patient sci-fi like Nolan and Villeneuve, and quieter, carefully framed films like Wes Anderson's and A24's. You can probably tell from the projects: Bingely plans what I watch, telefin keeps my Jellyfin server stocked, and the rest come from the same habit of building the tool I wished existed.</p>
+        <p>Outside of that: Barça, a World Cup prediction league I take far too seriously, and a blog on <a href="https://mdsherinoff.github.io" target="_blank" rel="noopener">mdsherinoff.github.io</a>.</p>
+      </div>
+      <dl class="credits credits--side">
+        <div><dt>Education</dt><dd>BSc Computer Science, Qatar University, Jan 2023 – May 2027</dd></div>
+        <div><dt>Coursework</dt><dd>Software Engineering, Database Systems, Networks, Web Development, OOP (Java), Game Design, Project Management</dd></div>
+        <div><dt>Certificate</dt><dd>CCNA: Introduction to Networks, Cisco Networking Academy, Jan 2026</dd></div>
+        <div><dt>Languages</dt><dd>Malayalam (native), English (fluent); some Hindi, Tamil and Spanish</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Get in touch.</h2>
+    <p>Hiring for summer 2027, want a walkthrough of ComplyQatar, or have a film recommendation? Email me.</p>
+    <p class="big"><a href="mailto:mohammedsherinofficial@gmail.com">mohammedsherinofficial@gmail.com</a></p>
+    <p class="links"><a href="https://github.com/mdsherinoff" target="_blank" rel="noopener">GitHub ↗</a> <a href="https://www.linkedin.com/in/mdsherinoff" target="_blank" rel="noopener">LinkedIn ↗</a></p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>Mohammed Sherin · Doha, 2026</p>
+  <p>Built by hand, no framework. The demos run my projects' own code wherever a browser allows.</p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
