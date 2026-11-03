@@ -10,12 +10,12 @@ Plain HTML, CSS and a few lines of JS. No framework and no build step.
 - `assets/shots/`: preview images (screenshots of the live sites and demos)
 - `demos/`: the demos that run on this site
   - `manglish/`: Raycast-style UI around the extension's real transliteration code (calls Google Input Tools, like the extension)
-  - `ringlog/`: Ringlog's real `app.html` with `mock.js` standing in for the local Python server; `calls.json` and the sample exports were generated with Ringlog's own exporter from made-up calls
+  - `wc-pool/`: the prediction pool's look and its real scoring functions (`lib/scoring.ts`), with simulated results
   - `telefin/`: a simulation using the bot's real rules and message text
-  - `languagesort/`: the plugin's script detector ported from C#, over a demo library
+  - `odins-garden/`: the Flutter app's Dictionary tab ported to the web: same GBIF and Wikipedia requests, same keyword extraction
 - `writing/`: blog posts copied from the Hugo blog (`my-blog` repo) by `scripts/import_blog.py`; the blog stays the original and each copy links back to it
 - `assets/avatar.png`: my GitHub avatar, used as the logo and favicon
-- `archive/`: earlier experiments (2D VHS version, 3D store), kept for reference
+- `archive/`: earlier experiments (2D VHS version, 3D store) and retired demos (Ringlog, Language Sort)
 
 openMinistry and Bingely are embedded straight from their live sites.
 
@@ -32,10 +32,6 @@ Write on the blog as usual, then:
 ```bash
 python3 scripts/import_blog.py
 ```
-
-## Refreshing demo data
-
-Ringlog's sample data comes from a small generator script that builds made-up `Call`s and runs them through `ringlog.export.WRITERS`. Re-run it if the exporter changes so the sample report matches the real one.
 
 ## Deploy
 

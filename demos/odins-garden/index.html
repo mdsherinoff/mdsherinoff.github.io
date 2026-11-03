@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Odin's Garden · plant dictionary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* Web port of the Flutter app's Dictionary tab. Same GBIF search, same
+     Wikipedia lookups, same keyword extraction (lib/services/dictionary_service.dart). */
+  :root { --green: #2E7D32; --green-50: #E8F5E9; --bg: #F7FAF7; --text: #1b1f1b; --dim: #667066; --card: #fff; --line: #e3e9e3; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { display: grid; place-items: center; background: #dfe7df; font: 14px/1.45 Roboto, system-ui, sans-serif; color: var(--text); }
+  .phone { width: 390px; height: min(820px, 100vh - 32px); background: var(--bg); border-radius: 36px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 0 0 10px #1b1f1b, 0 30px 60px rgba(0,0,0,.3); position: relative; }
+  @media (max-width: 480px), (max-height: 600px) { body { place-items: stretch; } .phone { width: 100%; height: 100vh; border-radius: 0; box-shadow: none; } }
+  .appbar { background: var(--green); color: #fff; padding: 18px 16px 14px; display: flex; align-items: center; gap: 10px; }
+  .appbar h1 { margin: 0; font-size: 20px; font-weight: 500; flex: 1; }
+  .appbar button { background: none; border: 0; color: #fff; font-size: 22px; cursor: pointer; padding: 0 6px 0 0; }
+  .search { padding: 12px 14px 6px; }
+  .search form { display: flex; align-items: center; gap: 8px; background: #fff; border: 2px solid var(--line); border-radius: 28px; padding: 9px 14px; }
+  .search form:focus-within { border-color: var(--green); }
+  .search input { flex: 1; min-width: 0; border: 0; outline: 0; font: inherit; font-size: 15px; background: none; }
+  .chips { display: flex; gap: 6px; overflow-x: auto; padding: 8px 14px 4px; scrollbar-width: none; }
+  .chips button { flex: none; border: 1px solid var(--line); background: #fff; border-radius: 16px; padding: 5px 12px; font: inherit; font-size: 13px; cursor: pointer; color: var(--text); }
+  .chips button:hover { border-color: var(--green); color: var(--green); }
+  .body { flex: 1; overflow-y: auto; padding: 8px 14px 18px; }
+  .card { display: flex; gap: 12px; align-items: center; background: var(--card); border-radius: 14px; padding: 12px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.07); cursor: pointer; border: 0; width: 100%; text-align: left; font: inherit; color: inherit; }
+  .card:hover { box-shadow: 0 2px 8px rgba(46,125,50,.2); }
+  .card .ico { width: 46px; height: 46px; border-radius: 12px; background: var(--green-50); display: grid; place-items: center; font-size: 22px; flex: none; }
+  .card b { display: block; font-weight: 500; font-size: 15px; }
+  .card i { color: var(--dim); font-size: 13px; }
+  .card small { display: block; color: var(--green); font-size: 12px; margin-top: 2px; }
+  .muted { color: var(--dim); text-align: center; padding: 32px 10px; }
+  .shimmer { height: 70px; border-radius: 14px; margin-bottom: 10px; background: linear-gradient(90deg, #eef2ee 25%, #f8faf8 50%, #eef2ee 75%); background-size: 200% 100%; animation: sh 1.2s infinite; }
+  @keyframes sh { to { background-position: -200% 0; } }
+  .hero { margin: -8px -14px 12px; height: 210px; background: var(--green-50) center / cover no-repeat; display: grid; place-items: center; font-size: 60px; }
+  .detail h2 { margin: 0; font-size: 22px; font-weight: 700; }
+  .detail .sci { color: var(--dim); font-style: italic; margin: 2px 0 10px; }
+  .tax { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .tax span { font-size: 12px; background: var(--green-50); color: var(--green); border-radius: 10px; padding: 3px 9px; }
+  .box { background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .box h3 { margin: 0 0 8px; font-size: 14px; font-weight: 700; color: var(--green); }
+  .box p { margin: 0; }
+  .box ul { margin: 0; padding-left: 0; list-style: none; }
+  .box li { padding: 4px 0; }
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pills span { border: 1px solid var(--line); border-radius: 14px; padding: 3px 10px; font-size: 13px; }
+  .tox { border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; font-weight: 500; border: 1px solid; }
+  .wiki { color: var(--green); font-weight: 500; }
+  .nav { display: flex; border-top: 1px solid var(--line); background: #fff; }
+  .nav span { flex: 1; text-align: center; padding: 9px 0 12px; font-size: 12px; color: #9E9E9E; }
+  .nav span.on { color: var(--green); font-weight: 500; }
+  .nav span i { display: block; font-style: normal; font-size: 18px; }
+  .note { position: fixed; right: 10px; bottom: 10px; padding: 5px 9px; border-radius: 6px; background: rgba(0,0,0,.75); color: #fff; font-size: 11.5px; }
+  @media (max-width: 480px) { .note { display: none; } }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="appbar"><button id="back" hidden aria-label="Back">←</button><h1 id="heading">Plant Dictionary</h1></div>
+  <div id="searchArea">
+    <div class="search"><form id="form" role="search"><span aria-hidden="true">🔍</span><input id="q" placeholder="Search plants (e.g. tulsi, monstera)…" autocomplete="off" aria-label="Search plants"></form></div>
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="body" id="body" aria-live="polite"></div>
+  <div class="nav" aria-hidden="true"><span><i>🏡</i>Home</span><span><i>📔</i>Diary</span><span class="on"><i>📖</i>Dictionary</span></div>
+</div>
+<span class="note">Web port of the app's Dictionary tab · live GBIF + Wikipedia data</span>
+
+<script>
+// ---- lib/services/dictionary_service.dart, ported ----
+const GBIF = "https://api.gbif.org/v1";
+const WIKI_REST = "https://en.wikipedia.org/api/rest_v1";
+const WIKI_API = "https://en.wikipedia.org/w/api.php";
+const searchCache = new Map(), plantCache = new Map();
+
+async function getJson(url, ms = 10000) {
+  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), ms);
+  try { const r = await fetch(url, { signal: ctl.signal }); if (!r.ok) throw new Error(r.status); return await r.json(); }
+  finally { clearTimeout(t); }
+}
+
+function fromGbifJson(j) {
+  const scientific = j.scientificName || j.canonicalName || "Unknown";
+  let common = "";
+  const v = j.vernacularNames;
+  if (Array.isArray(v) && v.length) {
+    const en = v.find((x) => x.language === "eng" || x.language === "en") || v[0];
+    common = en.vernacularName || "";
+  }
+  if (!common) common = j.canonicalName || scientific;
+  return { id: String(j.usageKey ?? j.key ?? 0), commonName: common, scientificName: scientific, canonicalName: j.canonicalName, family: j.family, genus: j.genus, kingdom: j.kingdom, order: j.order };
+}
+
+async function searchPlants(query) {
+  if (!query.trim()) return [];
+  if (searchCache.has(query)) return searchCache.get(query);
+  const j = await getJson(`${GBIF}/species/search?q=${encodeURIComponent(query)}&kingdom=Plantae&rank=SPECIES&status=ACCEPTED&limit=20`);
+  const plants = (j.results || []).map(fromGbifJson).filter((p) => p.scientificName && (!p.kingdom || p.kingdom.toLowerCase() === "plantae"));
+  searchCache.set(query, plants);
+  return plants;
+}
+
+async function wikiTitle(name) {
+  const s = await getJson(`${WIKI_API}?action=query&list=search&srsearch=${encodeURIComponent(name)}&format=json&origin=*`, 8000);
+  return s.query?.search?.[0]?.title || "";
+}
+
+async function fetchWikipediaData(name) {
+  try {
+    const title = await wikiTitle(name); if (!title) return null;
+    const sum = await getJson(`${WIKI_REST}/page/summary/${encodeURIComponent(title)}`, 8000);
+    const description = sum.extract || "";
+    // the app asks for a 400px rendition; Wikimedia now only serves its standard
+    // thumbnail sizes to browsers, so the web port uses the one it's given
+    const imageUrl = sum.thumbnail?.source || null;
+    return { description, imageUrl, wikipediaUrl: sum.content_urls?.mobile?.page, careNotes: extractCareNotes(description), uses: extractUses(description) };
+  } catch { return null; }
+}
+
+async function fetchExtendedCareData(name) {
+  try {
+    const title = await wikiTitle(name); if (!title) return empty();
+    const p = await getJson(`${WIKI_API}?action=parse&page=${encodeURIComponent(title)}&prop=sections|wikitext&format=json&origin=*`);
+    const w = p.parse?.wikitext?.["*"] || "";
+    return { diseases: extractDiseases(w), pests: extractPests(w), detailedCare: extractDetailedCare(w), toxicity: extractToxicity(w), habitat: extractHabitat(w) };
+  } catch { return empty(); }
+}
+const empty = () => ({ diseases: [], pests: [], detailedCare: [], toxicity: "", habitat: "" });
+
+const pick = (text, table) => { const l = text.toLowerCase(); return Object.entries(table).filter(([k]) => l.includes(k)).map(([, v]) => v); };
+const extractDiseases = (t) => pick(t, { "powdery mildew": "Powdery Mildew", "root rot": "Root Rot", "leaf spot": "Leaf Spot", "blight": "Blight", "rust": "Rust Disease", "canker": "Canker", "mosaic virus": "Mosaic Virus", "botrytis": "Botrytis (Grey Mould)", "fusarium": "Fusarium Wilt", "anthracnose": "Anthracnose", "downy mildew": "Downy Mildew", "crown rot": "Crown Rot", "verticillium": "Verticillium Wilt" });
+const extractPests = (t) => pick(t, { "aphid": "Aphids", "spider mite": "Spider Mites", "whitefly": "Whiteflies", "mealybug": "Mealybugs", "scale insect": "Scale Insects", "thrip": "Thrips", "caterpillar": "Caterpillars", "slug": "Slugs & Snails", "fungus gnat": "Fungus Gnats", "leaf miner": "Leaf Miners", "beetles": "Beetles", "nematode": "Nematodes" });
+
+function extractDetailedCare(text) {
+  const l = text.toLowerCase(), c = [], has = (...k) => k.some((x) => l.includes(x));
+  if (has("sandy soil")) c.push("🪨 Prefers sandy, free-draining soil");
+  else if (has("clay soil")) c.push("🌍 Tolerates clay soil");
+  else if (has("loamy", "loam")) c.push("🌱 Thrives in loamy soil");
+  else if (has("well-drain")) c.push("💧 Needs well-draining soil");
+  if (has("acidic soil", "acid soil", "low ph")) c.push("🧪 Prefers acidic soil (low pH)");
+  else if (has("alkaline", "high ph")) c.push("🧪 Tolerates alkaline soil");
+  else if (has("neutral ph", "ph 6", "ph 7")) c.push("🧪 Prefers neutral pH soil");
+  if (has("drought-tolerant", "drought tolerant", "xeric")) c.push("💧 Drought tolerant — water sparingly");
+  else if (has("water regularly", "consistent moisture", "keep moist")) c.push("💧 Water regularly — keep soil moist");
+  else if (has("overwater", "over-water")) c.push("⚠️ Avoid overwatering — prone to root rot");
+  if (has("full sun")) c.push("☀️ Full sun — 6+ hours direct sunlight daily");
+  else if (has("partial shade", "part shade", "dappled")) c.push("🌤 Partial shade — 3 to 6 hours of sun");
+  else if (has("full shade", "deep shade")) c.push("🌑 Tolerates full shade");
+  else if (has("bright indirect", "indirect light")) c.push("🌥 Prefers bright indirect light");
+  if (has("frost hardy", "fully hardy")) c.push("❄️ Frost hardy — tolerates freezing");
+  else if (has("half hardy", "tender perennial")) c.push("🌡 Half hardy — protect from hard frost");
+  else if (has("tropical", "frost-free", "subtropical")) c.push("🌴 Tropical — needs frost-free conditions");
+  if (has("fertiliz", "fertilise", "feed monthly", "nitrogen")) c.push("🌿 Benefits from regular fertilisation");
+  if (has("prune", "deadhead", "cut back")) c.push("✂️ Prune regularly to encourage growth");
+  return c;
+}
+function extractToxicity(text) {
+  const l = text.toLowerCase(), has = (...k) => k.some((x) => l.includes(x));
+  if (has("toxic to humans", "poisonous to humans")) return "toxic_humans";
+  if (has("toxic to pets", "toxic to cats", "toxic to dogs")) return "toxic_pets";
+  if (has("toxic", "poisonous")) return "toxic_general";
+  if (has("non-toxic", "edible", "safe for")) return "safe";
+  return "unknown";
+}
+function extractHabitat(text) {
+  const l = text.toLowerCase(), has = (...k) => k.some((x) => l.includes(x));
+  if (has("mediterranean")) return "Mediterranean";
+  if (has("tropical rainforest", "tropical forest")) return "Tropical Rainforest";
+  if (has("tropical")) return "Tropical";
+  if (has("alpine", "mountain")) return "Alpine / Mountain";
+  if (has("desert", "arid")) return "Desert / Arid";
+  if (has("wetland", "marsh", "bog")) return "Wetland";
+  if (has("woodland", "forest")) return "Woodland / Forest";
+  if (has("grassland", "meadow")) return "Grassland / Meadow";
+  if (has("coastal", "maritime")) return "Coastal";
+  return "";
+}
+function extractCareNotes(text) {
+  const l = text.toLowerCase(), n = [], has = (...k) => k.some((x) => l.includes(x));
+  if (has("full sun", "direct sun")) n.push("Prefers full sun"); else if (has("partial shade", "part shade")) n.push("Prefers partial shade"); else if (has("shade")) n.push("Tolerates shade");
+  if (has("well-drain", "well drain")) n.push("Needs well-draining soil");
+  if (has("drought")) n.push("Drought tolerant");
+  if (has("moist soil", "moist conditions")) n.push("Prefers moist soil");
+  if (has("frost", "hardy")) n.push("Frost hardy");
+  if (has("tropical", "warm climate")) n.push("Prefers warm/tropical climate");
+  if (has("pruning", "deadhead")) n.push("Benefits from regular pruning");
+  return n;
+}
+function extractUses(text) {
+  const l = text.toLowerCase(), u = [], has = (...k) => k.some((x) => l.includes(x));
+  if (has("medicinal", "traditional medicine")) u.push("Medicinal");
+  if (has("ornamental", "garden plant", "cultivated")) u.push("Ornamental");
+  if (has("edible", "culinary", "food")) u.push("Edible");
+  if (has("timber", "wood")) u.push("Timber");
+  if (has("fragrant", "perfume", "essential oil")) u.push("Fragrant / Aromatic");
+  if (has("toxic", "poisonous")) u.push("⚠️ Toxic / Poisonous");
+  return u;
+}
+async function getPlantDetail(plant) {
+  if (plantCache.has(plant.id)) return plantCache.get(plant.id);
+  const [wiki, ext] = await Promise.all([fetchWikipediaData(plant.scientificName), fetchExtendedCareData(plant.scientificName)]);
+  const r = { ...plant, ...(wiki || {}), ...ext };
+  plantCache.set(plant.id, r);
+  return r;
+}
+// ------------------------------------------------------
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const TOX = {
+  toxic_humans: ["#FFEBEE", "#c62828", "⚠️ Toxic to Humans"],
+  toxic_pets: ["#FFEBEE", "#d32f2f", "⚠️ Toxic to Pets"],
+  toxic_general: ["#FFF8E1", "#ef6c00", "⚠️ May Be Toxic — Handle With Care"],
+  safe: ["#E8F5E9", "#2E7D32", "✅ Non-Toxic / Safe"],
+};
+const FEATURED = ["Ocimum tenuiflorum", "Monstera deliciosa", "Lavandula angustifolia", "Aloe vera", "Helianthus annuus", "Ficus benjamina", "Rosa"];
+let results = [], seq = 0;
+
+$("chips").innerHTML = FEATURED.map((q) => `<button type="button">${q}</button>`).join("");
+$("chips").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { $("q").value = b.textContent; run(b.textContent); } });
+$("form").addEventListener("submit", (e) => { e.preventDefault(); run($("q").value); });
+let deb = 0; $("q").addEventListener("input", () => { clearTimeout(deb); deb = setTimeout(() => run($("q").value), 500); });
+$("back").addEventListener("click", showList);
+
+async function run(q) {
+  const id = ++seq;
+  if (!q.trim()) { results = []; return showList(); }
+  $("body").innerHTML = '<div class="shimmer"></div>'.repeat(5);
+  try { const r = await searchPlants(q); if (id !== seq) return; results = r; showList(); }
+  catch { if (id === seq) $("body").innerHTML = `<p class="muted">Search failed. Check your connection and try again.</p>`; }
+}
+
+function showList() {
+  $("back").hidden = true; $("heading").textContent = "Plant Dictionary"; $("searchArea").hidden = false;
+  if (!results.length) {
+    $("body").innerHTML = $("q").value.trim() ? `<p class="muted">No plants found for “${esc($("q").value)}”.</p>` : `<p class="muted">🌿<br>Search plant species from GBIF, or tap one above.</p>`;
+    return;
+  }
+  $("body").innerHTML = results.map((p, i) => `<button class="card" data-i="${i}"><span class="ico">🌿</span><span><b>${esc(p.commonName)}</b><i>${esc(p.scientificName)}</i>${p.family ? `<small>${esc(p.family)}</small>` : ""}</span></button>`).join("");
+  $("body").querySelectorAll(".card").forEach((c) => c.addEventListener("click", () => showDetail(results[+c.dataset.i])));
+  $("body").scrollTop = 0;
+}
+
+async function showDetail(plant) {
+  const id = ++seq;
+  $("back").hidden = false; $("heading").textContent = plant.commonName; $("searchArea").hidden = true;
+  $("body").innerHTML = `<div class="hero">🌿</div><div class="detail"><h2>${esc(plant.commonName)}</h2><p class="sci">${esc(plant.scientificName)}</p></div>` + '<div class="shimmer"></div>'.repeat(3);
+  const d = await getPlantDetail(plant);
+  if (id !== seq) return;
+  const tax = [["Family", d.family], ["Genus", d.genus], ["Order", d.order]].filter(([, v]) => v);
+  const tox = TOX[d.toxicity];
+  const sect = (title, inner) => `<div class="box"><h3>${title}</h3>${inner}</div>`;
+  $("body").innerHTML = `
+    <div class="hero" ${d.imageUrl ? `style="background-image:url('${esc(d.imageUrl)}')"` : ""}>${d.imageUrl ? "" : "🌿"}</div>
+    <div class="detail">
+      <h2>${esc(d.commonName)}</h2><p class="sci">${esc(d.scientificName)}</p>
+      <div class="tax">${tax.map(([k, v]) => `<span>${k}: ${esc(v)}</span>`).join("")}</div>
+      ${tox ? `<div class="tox" style="background:${tox[0]};color:${tox[1]};border-color:${tox[1]}55">${tox[2]}</div>` : ""}
+      ${d.description ? sect("About", `<p>${esc(d.description)}</p>`) : ""}
+      ${d.detailedCare?.length ? sect("Care guide", `<ul>${d.detailedCare.map((c) => `<li>${esc(c)}</li>`).join("")}</ul>`) : d.careNotes?.length ? sect("Care notes", `<div class="pills">${d.careNotes.map((c) => `<span>${esc(c)}</span>`).join("")}</div>`) : ""}
+      ${d.habitat ? sect("Native habitat", `<p>${esc(d.habitat)}</p>`) : ""}
+      ${d.uses?.length ? sect("Uses", `<div class="pills">${d.uses.map((u) => `<span>${esc(u)}</span>`).join("")}</div>`) : ""}
+      ${d.diseases.length ? sect("Common diseases", `<div class="pills">${d.diseases.map((u) => `<span>${esc(u)}</span>`).join("")}</div>`) : ""}
+      ${d.pests.length ? sect("Common pests", `<div class="pills">${d.pests.map((u) => `<span>${esc(u)}</span>`).join("")}</div>`) : ""}
+      ${d.wikipediaUrl ? `<p><a class="wiki" href="${esc(d.wikipediaUrl)}" target="_blank" rel="noopener">Read more on Wikipedia ↗</a></p>` : ""}
+    </div>`;
+  $("body").scrollTop = 0;
+}
+showList();
+</script>
+</body>
+</html>

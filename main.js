@@ -4,7 +4,7 @@ document.querySelectorAll(".demo").forEach((fig) => {
   const chrome = fig.querySelector(".demo__chrome");
   const stage = fig.querySelector(".demo__stage");
   const src = fig.dataset.src;
-  const title = fig.closest(".project").querySelector("h3").textContent;
+  const title = fig.dataset.title || fig.closest(".project").querySelector("h3").textContent;
   const poster = stage.innerHTML;
 
   const tools = document.createElement("span");

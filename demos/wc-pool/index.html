@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WC26 Prediction Pool · demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* The pool's look and its real scoring rules (lib/scoring.ts, lib/points-config.ts).
+     Fixtures are from the app; results here are simulated. */
+  :root { --green: #0b3d2e; --green-2: #1f6b4a; --cream: #f5f1e8; --amber: #f2a93b; --line: #e6e0d3; --text: #1c211e; --dim: #6c736e; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--cream); color: var(--text); font: 14px/1.45 Barlow, system-ui, sans-serif; }
+  .top { background: var(--green); color: #fff; }
+  .nav { max-width: 760px; margin: 0 auto; display: flex; align-items: center; gap: 10px; padding: 12px 16px; }
+  .badge { background: var(--amber); color: var(--green); font: 800 15px/1 "Barlow Condensed"; padding: 5px 7px; border-radius: 4px; }
+  .nav b { font: 800 19px/1 "Barlow Condensed"; }
+  .nav span { margin-left: auto; font-size: 13px; opacity: .8; }
+  .hero { text-align: center; padding: 18px 16px 26px; }
+  .hero small { color: var(--amber); font: 700 11px/1 "Barlow Condensed"; letter-spacing: .25em; }
+  .hero h1 { margin: 8px 0 6px; font: 800 clamp(26px, 5vw, 38px)/1.02 "Barlow Condensed"; }
+  .hero p { margin: 0 auto; max-width: 30em; opacity: .85; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
+  h2 { margin: 0; font: 800 21px/1.1 "Barlow Condensed"; color: var(--green); }
+  .sub { margin: 2px 0 12px; color: var(--dim); }
+  .match { display: flex; align-items: center; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  .match .who { flex: 1; min-width: 180px; }
+  .match .who small { display: block; color: var(--dim); font-size: 12px; }
+  .match .who b { font-weight: 600; }
+  .match .who em { font-style: normal; color: var(--dim); margin: 0 4px; }
+  .score { display: flex; align-items: center; gap: 6px; }
+  .score input { width: 40px; height: 36px; text-align: center; border: 0; border-radius: 5px; background: var(--green); color: #fff; font: 700 18px/1 Barlow; }
+  .score input:disabled { opacity: .85; }
+  .winner { display: flex; gap: 4px; }
+  .winner button { border: 1px solid var(--line); background: #fff; border-radius: 5px; padding: 6px 9px; font: 600 12.5px Barlow; cursor: pointer; }
+  .winner button.on { background: var(--green-2); color: #fff; border-color: var(--green-2); }
+  .result { width: 100%; display: flex; justify-content: space-between; gap: 8px; border-top: 1px dashed var(--line); padding-top: 8px; margin-top: 2px; font-size: 13px; color: var(--dim); }
+  .result b { color: var(--text); }
+  .pts { font: 800 15px/1 "Barlow Condensed"; padding: 4px 8px; border-radius: 4px; background: #eee; color: var(--dim); white-space: nowrap; }
+  .pts.hit { background: var(--amber); color: var(--green); }
+  .tag { font: 700 10.5px/1 "Barlow Condensed"; letter-spacing: .12em; color: var(--green-2); background: #e3efe7; border-radius: 3px; padding: 3px 6px; margin-left: 6px; vertical-align: 2px; }
+  .actions { display: flex; gap: 8px; margin: 14px 0 26px; flex-wrap: wrap; align-items: center; }
+  .btn { border: 0; border-radius: 6px; background: var(--green-2); color: #fff; font: 600 14px Barlow; padding: 10px 16px; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--green); border: 1px solid var(--green); }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .hint { color: var(--dim); font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  th { background: var(--green); color: #fff; font: 700 13px Barlow Condensed; letter-spacing: .04em; text-align: right; padding: 9px 12px; }
+  th:nth-child(-n+2) { text-align: left; }
+  td { padding: 9px 12px; border-top: 1px solid var(--line); text-align: right; }
+  td:nth-child(-n+2) { text-align: left; }
+  tr.me td { background: #fdf3e2; font-weight: 600; }
+  td:last-child { font: 800 16px "Barlow Condensed"; color: var(--green); }
+  .rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 26px; }
+  .rules div { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; color: var(--dim); }
+  .rules b { display: block; font: 800 16px "Barlow Condensed"; color: var(--green); margin-bottom: 2px; }
+  @media (max-width: 560px) { .rules { grid-template-columns: 1fr; } }
+  .note { margin-top: 16px; text-align: center; color: var(--dim); font-size: 12px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="nav"><span class="badge">WC26</span><b>Prediction Pool</b><span>Groups · Knockouts · Leaderboard</span></div>
+  <div class="hero"><small>FIFA WORLD CUP 2026 · USA · MEXICO · CANADA</small><h1>Predict every match.<br>Settle the bragging rights.</h1><p>Call these, then play the matches out against the group chat.</p></div>
+</header>
+<main>
+  <h2>Today's matches</h2>
+  <p class="sub">Group stage: exact scoreline only. Knockouts: pick the winner, add a score for the bonus.</p>
+  <div id="matches"></div>
+  <div class="actions">
+    <button class="btn" id="play">Play the matches</button>
+    <button class="btn ghost" id="reset" hidden>Predict again</button>
+    <span class="hint" id="hint">Fill in at least one prediction.</span>
+  </div>
+  <h2>Leaderboard</h2>
+  <p class="sub">Group: exact score only. Knockouts: winner + score bonus.</p>
+  <table><thead><tr><th>#</th><th>Player</th><th>Groups</th><th>Knockouts</th><th>Total</th></tr></thead><tbody id="board"></tbody></table>
+  <div class="rules">
+    <div><b>01 Group stage</b>Exact scoreline: 1 point. The right winner alone scores nothing.</div>
+    <div><b>02 Knockouts</b>Right winner: 1 point. Exact score too: +2 bonus. Max 3.</div>
+    <div><b>03 Shootouts</b>Called a draw exactly but picked the wrong shootout winner? You still get the 2 for the score.</div>
+  </div>
+  <p class="note">Demo: fixtures from the app, results simulated, the friends are made up, and the scoring is the app's real code.</p>
+</main>
+
+<script>
+// ---- lib/scoring.ts + lib/points-config.ts defaults ----
+const POINTS = { GROUP_EXACT: 1, KNOCKOUT_WINNER: 1, KNOCKOUT_EXACT_BONUS: 2 };
+function scoreGroupPrediction(predHome, predAway, actualHome, actualAway, knownIncorrect, pointsForExact) {
+  if (knownIncorrect) return 0;
+  if (predHome == null || predAway == null) return 0;
+  return predHome === actualHome && predAway === actualAway ? pointsForExact : 0;
+}
+function scoreKnockoutPrediction({ predictedWinnerTeamId, predHome, predAway, actualWinnerTeamId, actualHome, actualAway, knownIncorrect, pointsForWinner, pointsForExactBonus }) {
+  if (knownIncorrect) return 0;
+  const isDraw = actualHome === actualAway;
+  const exactScore = predHome != null && predAway != null && predHome === actualHome && predAway === actualAway;
+  if (isDraw && exactScore && predictedWinnerTeamId !== actualWinnerTeamId) return pointsForExactBonus;
+  if (!predictedWinnerTeamId) return 0;
+  let points = 0;
+  if (predictedWinnerTeamId === actualWinnerTeamId) {
+    points += pointsForWinner;
+    if (exactScore) points += pointsForExactBonus;
+  }
+  return points;
+}
+// --------------------------------------------------------
+
+const MATCHES = [
+  { id: "m1", stage: "GROUP", when: "Wed, Jun 24 · 10:00 PM", home: "Switzerland", away: "Canada", hs: 1.3, as: 1.2 },
+  { id: "m2", stage: "GROUP", when: "Wed, Jun 24 · 10:00 PM", home: "Bosnia-Herzegovina", away: "Qatar", hs: 1.2, as: 1.0 },
+  { id: "m3", stage: "GROUP", when: "Thu, Jun 25 · 1:00 AM", home: "Morocco", away: "Haiti", hs: 2.1, as: .5 },
+  { id: "m4", stage: "GROUP", when: "Thu, Jun 25 · 1:00 AM", home: "Scotland", away: "Brazil", hs: .7, as: 2.0 },
+  { id: "k1", stage: "R16", when: "Round of 16 · demo fixture", home: "Spain", away: "Argentina", hs: 1.3, as: 1.3 },
+];
+const FRIENDS = ["Faris", "Ammu", "Rahul", "Nadia"];
+const pred = Object.fromEntries(MATCHES.map((m) => [m.id, { h: null, a: null, w: null }]));
+let played = null;
+const $ = (id) => document.getElementById(id);
+
+function poisson(l) { let k = 0, p = 1, L = Math.exp(-l); do { k++; p *= Math.random(); } while (p > L); return k - 1; }
+function simulate(m) {
+  const h = poisson(m.hs), a = poisson(m.as);
+  let winner = h > a ? m.home : a > h ? m.away : null, pens = false;
+  if (m.stage !== "GROUP" && !winner) { winner = Math.random() < .5 ? m.home : m.away; pens = true; }
+  return { h, a, winner, pens };
+}
+function friendGuess(m) {
+  const h = poisson(m.hs), a = poisson(m.as);
+  return { h, a, w: m.stage === "GROUP" ? null : h > a ? m.home : a > h ? m.away : (Math.random() < .5 ? m.home : m.away) };
+}
+function score(m, p, r) {
+  if (m.stage === "GROUP") return scoreGroupPrediction(p.h, p.a, r.h, r.a, false, POINTS.GROUP_EXACT);
+  return scoreKnockoutPrediction({ predictedWinnerTeamId: p.w, predHome: p.h, predAway: p.a, actualWinnerTeamId: r.winner, actualHome: r.h, actualAway: r.a, pointsForWinner: POINTS.KNOCKOUT_WINNER, pointsForExactBonus: POINTS.KNOCKOUT_EXACT_BONUS });
+}
+
+function renderMatches() {
+  $("matches").innerHTML = MATCHES.map((m) => {
+    const p = pred[m.id], r = played?.results[m.id], ko = m.stage !== "GROUP";
+    const pts = r ? score(m, p, r) : null;
+    return `<div class="match" data-id="${m.id}">
+      <div class="who"><small>${m.when}</small><b>${m.home}</b><em>vs</em><b>${m.away}</b>${ko ? '<span class="tag">KNOCKOUT</span>' : ""}</div>
+      ${ko ? `<div class="winner">${[m.home, m.away].map((t) => `<button type="button" data-w="${t}" class="${p.w === t ? "on" : ""}" ${played ? "disabled" : ""}>${t}</button>`).join("")}</div>` : ""}
+      <div class="score"><input inputmode="numeric" maxlength="2" data-s="h" value="${p.h ?? ""}" aria-label="${m.home} goals" ${played ? "disabled" : ""}><span>–</span><input inputmode="numeric" maxlength="2" data-s="a" value="${p.a ?? ""}" aria-label="${m.away} goals" ${played ? "disabled" : ""}></div>
+      ${r ? `<div class="result"><span>Full time: <b>${m.home} ${r.h}–${r.a} ${m.away}</b>${r.pens ? ` · ${r.winner} win on penalties` : ""}</span><span class="pts ${pts ? "hit" : ""}">+${pts} pt${pts === 1 ? "" : "s"}</span></div>` : ""}
+    </div>`;
+  }).join("");
+}
+function renderBoard() {
+  const rows = [{ name: "You", me: true, g: 0, k: 0 }, ...FRIENDS.map((n) => ({ name: n, g: 0, k: 0 }))];
+  if (played) {
+    for (const m of MATCHES) {
+      const r = played.results[m.id];
+      rows.forEach((row, i) => { const p = i === 0 ? pred[m.id] : played.friends[row.name][m.id]; const s = score(m, p, r); if (m.stage === "GROUP") row.g += s; else row.k += s; });
+    }
+  }
+  rows.forEach((r) => (r.t = r.g + r.k));
+  rows.sort((a, b) => b.t - a.t || (a.me ? -1 : 1));
+  $("board").innerHTML = rows.map((r, i) => `<tr class="${r.me ? "me" : ""}"><td>${i + 1}</td><td>${r.name}</td><td>${r.g}</td><td>${r.k}</td><td>${r.t}</td></tr>`).join("");
+}
+function anyPrediction() { return MATCHES.some((m) => { const p = pred[m.id]; return (p.h != null && p.a != null) || p.w; }); }
+function syncButtons() { $("play").disabled = !anyPrediction() || !!played; $("hint").hidden = anyPrediction() || !!played; }
+
+$("matches").addEventListener("input", (e) => {
+  const i = e.target.closest("input"); if (!i) return;
+  i.value = i.value.replace(/\D/g, "");
+  const id = i.closest(".match").dataset.id;
+  pred[id][i.dataset.s] = i.value === "" ? null : +i.value;
+  syncButtons();
+});
+$("matches").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-w]"); if (!b || played) return;
+  const id = b.closest(".match").dataset.id;
+  pred[id].w = pred[id].w === b.dataset.w ? null : b.dataset.w;
+  renderMatches(); syncButtons();
+});
+$("play").addEventListener("click", () => {
+  played = { results: {}, friends: Object.fromEntries(FRIENDS.map((f) => [f, {}])) };
+  for (const m of MATCHES) { played.results[m.id] = simulate(m); FRIENDS.forEach((f) => (played.friends[f][m.id] = friendGuess(m))); }
+  renderMatches(); renderBoard(); syncButtons(); $("reset").hidden = false;
+});
+$("reset").addEventListener("click", () => { played = null; $("reset").hidden = true; renderMatches(); renderBoard(); syncButtons(); });
+renderMatches(); renderBoard(); syncButtons();
+</script>
+</body>
+</html>
