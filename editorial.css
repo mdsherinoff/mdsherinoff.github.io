@@ -91,8 +91,7 @@ p { margin: 0 0 .9em; hyphens: auto; }
 .demo__chrome { display: flex; align-items: center; gap: 12px; padding: 7px 0; border-top: 2px solid var(--rule); font: 600 11px/1 var(--label); letter-spacing: .12em; text-transform: uppercase; }
 .url { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tag { color: var(--red); }
-.demo__tools { display: none; gap: 14px; }
-.demo.is-playing .demo__tools { display: flex; }
+.demo__tools { display: flex; gap: 14px; }
 .demo__tools a, .demo__tools button { background: none; border: 0; padding: 0; font: inherit; letter-spacing: inherit; text-transform: inherit; color: var(--ink); cursor: pointer; text-decoration: none; }
 .demo__tools a:hover, .demo__tools button:hover { color: var(--red); }
 .demo__stage { position: relative; aspect-ratio: 16 / 10; background: #111; border: 1px solid var(--rule); overflow: hidden; }
@@ -106,8 +105,26 @@ p { margin: 0 0 .9em; hyphens: auto; }
 }
 .play::before { content: "▶  "; color: var(--red); }
 .play:hover { transform: translate(calc(-50% + 2px), calc(-50% + 2px)); box-shadow: 3px 3px 0 var(--ink); color: var(--ink); }
-.demo__stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
-.demo.is-playing .demo__stage { aspect-ratio: auto; height: min(78vh, 680px); }
+.demo__stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; opacity: 0; transition: opacity .35s; }
+.demo__stage iframe.is-ready { opacity: 1; }
+
+/* A playing demo lifts off the page and fills most of the screen; the page
+   behind it dims and blurs, and stays exactly as it was. */
+html { scrollbar-gutter: stable; }
+html.has-demo-open { overflow: hidden; }
+.demo-modal { position: fixed; inset: 0; z-index: 50; }
+.demo-modal::before { content: ""; position: fixed; inset: 0; background: rgba(21, 19, 15, .5); backdrop-filter: blur(3px) saturate(.9); -webkit-backdrop-filter: blur(3px) saturate(.9); opacity: 0; transition: opacity .42s ease; }
+.demo-modal.is-open::before { opacity: 1; }
+.demo-modal__panel {
+  position: fixed; margin: 0; top: 5vh; left: max(4vw, calc(50vw - 660px)); width: min(92vw, 1320px); height: 90vh;
+  display: flex; flex-direction: column; padding: 0 14px 14px; background: var(--paper);
+  border: 1px solid var(--hair); box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
+}
+.demo-modal__panel .demo__chrome { border-top: 0; }
+.demo-modal__panel .demo__stage { flex: 1; aspect-ratio: auto; }
+.demo-modal__panel .demo__stage img { filter: none; }
+.demo.is-lifted .demo__chrome, .demo.is-lifted .demo__stage { visibility: hidden; }
+@media (max-width: 700px) { .demo-modal__panel { top: 10px; left: 10px; width: calc(100vw - 20px); height: calc(100dvh - 20px); padding: 0 10px 10px; } }
 .loading { position: absolute; inset: 0; display: grid; place-items: center; color: #bbb; font: 600 12px var(--label); letter-spacing: .14em; text-transform: uppercase; }
 figcaption { padding-top: 7px; border-top: 1px solid var(--hair); margin-top: 8px; font: italic 15px/1.35 var(--text); color: var(--muted); }
 
