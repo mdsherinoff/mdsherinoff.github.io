@@ -6,18 +6,6 @@
 <title>Page not found · Mohammed Sherin</title>
 <meta name="color-scheme" content="light">
 <meta name="robots" content="noindex">
-<script>
-  // Old addresses: the portfolio used to live at /portfolio/, and the blog at the
-  // root (/posts/…, /tags/…, /index.xml) before it moved to /blog/.
-  (function () {
-    var p = location.pathname, rest = location.search + location.hash;
-    if (/^\/portfolio(\/|$)/.test(p)) {
-      location.replace((p.replace(/^\/portfolio/, "") || "/") + rest);
-    } else if (/^\/(posts|tags|series|categories)(\/|$)|^\/index\.xml$|^\/sitemap\.xml$/.test(p)) {
-      location.replace("/blog" + p + rest);
-    }
-  })();
-</script>
 <link rel="icon" href="/assets/avatar.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

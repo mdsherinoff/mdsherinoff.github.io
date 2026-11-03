@@ -6,8 +6,7 @@ new post:
     python3 scripts/import_blog.py
 
 Refreshes the list between the <!-- writing:start --> / <!-- writing:end -->
-markers in index.html, and writes writing/<slug>/index.html as a redirect to
-the blog so links to the old copies on this site keep working.
+markers in index.html.
 Standard library only.
 """
 
@@ -50,22 +49,6 @@ def parse_front_matter(text: str) -> tuple[dict, str]:
     return meta, m.group(2)
 
 
-REDIRECT = """<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>{title} · Mohammed Sherin</title>
-<link rel="canonical" href="{url}">
-<meta http-equiv="refresh" content="0; url={url}">
-<meta name="robots" content="noindex">
-</head>
-<body>
-<p>This post is on my blog: <a href="{url}">{title}</a>.</p>
-</body>
-</html>
-"""
-
-
 def main() -> None:
     posts = []
     for name, url in list_posts():
@@ -83,9 +66,6 @@ def main() -> None:
             "date": when.strftime("%-d %b %Y"),
             "canonical": f"{BLOG_URL}{slug}/",
         }
-        out = ROOT / "writing" / slug / "index.html"
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(REDIRECT.format(title=html.escape(post["title"]), url=post["canonical"]))
         posts.append(post)
 
     posts.sort(key=lambda p: p["when"], reverse=True)

@@ -16,8 +16,8 @@ Plain HTML, CSS and a few lines of JS. No framework and no build step.
   - `wc-pool/`: the prediction pool's look and its real scoring functions (`lib/scoring.ts`), with simulated results
   - `telefin/`: a simulation using the bot's real rules and message text
   - `odins-garden/`: the Flutter app's Dictionary tab ported to the web: same GBIF and Wikipedia requests, same keyword extraction
-- `writing/`: redirects from the old on-site copies of blog posts to the blog; `scripts/import_blog.py` writes them and refreshes the homepage's post list, which links straight to the blog
-- `posts/`, `tags/`, `series/`, `404.html`: redirects from old addresses: the blog's from before it moved from the root to `/blog/`, and `/portfolio/…` from when this site lived there
+- `scripts/import_blog.py`: refreshes the homepage's list of blog posts, which link to the blog
+- `404.html`: the not-found page
 - `assets/avatar.png`: my GitHub avatar, used as the logo and favicon
 - `assets/mohammed-sherin-cv.pdf`: the CV the page links to; replace the file to update it
 - `archive/`: earlier designs (2D VHS, 3D store, the first one-page "programme" layout) and retired demos (Ringlog, Language Sort)
