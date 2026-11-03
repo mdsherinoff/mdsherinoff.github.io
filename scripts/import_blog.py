@@ -22,7 +22,7 @@ from pathlib import Path
 
 REPO = "mdsherinoff/my-blog"
 POSTS_DIR = "mohammedsherinblog/content/posts"
-BLOG_URL = "https://mdsherinoff.github.io/posts/"
+BLOG_URL = "https://mdsherinoff.github.io/blog/posts/"
 ROOT = Path(__file__).resolve().parent.parent
 
 # posts left off this site, and titles tidied up for it (the blog keeps its own)
@@ -90,7 +90,7 @@ def main() -> None:
 
     posts.sort(key=lambda p: p["when"], reverse=True)
     items = "\n".join(
-        f'        <li><a href="{p["canonical"]}"><time datetime="{p["when"].date().isoformat()}">{p["date"]}</time>'
+        f'        <li><a href="blog/posts/{p["slug"]}/"><time datetime="{p["when"].date().isoformat()}">{p["date"]}</time>'
         f'<b>{html.escape(p["title"])}</b></a></li>'
         for p in posts
     )

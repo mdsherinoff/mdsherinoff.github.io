@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found · Mohammed Sherin</title>
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<script>
+  // The blog used to live at the root (/posts/…, /tags/…, /index.xml); it's now under /blog/.
+  (function () {
+    var p = location.pathname;
+    if (/^\/(posts|tags|series|categories)(\/|$)|^\/index\.xml$|^\/sitemap\.xml$/.test(p)) {
+      location.replace("/blog" + p + location.search + location.hash);
+    }
+  })();
+</script>
+<link rel="icon" href="/assets/avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Franklin:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/editorial.css">
+</head>
+<body>
+<header class="masthead masthead--slim">
+  <div class="ears"><a href="/">Mohammed Sherin</a><span>Page not found</span><a href="/blog/">The blog</a></div>
+</header>
+<main>
+  <section class="letters">
+    <p class="kicker">Error 404</p>
+    <h2>This page went to press without us</h2>
+    <p>The link may be old, or the page may have moved.</p>
+    <p class="links"><a href="/">Front page</a> <a href="/blog/">The blog</a> <a href="/blog/posts/">All posts</a></p>
+  </section>
+</main>
+</body>
+</html>
