@@ -88,9 +88,10 @@ function openDemo(fig) {
 
   move(from, panel.getBoundingClientRect()).then(() => {
     if (current !== fig) return;
-    const loading = document.createElement("span");
+    const loading = document.createElement("div");
     loading.className = "loading";
-    loading.textContent = `Loading ${title}…`;
+    loading.setAttribute("aria-hidden", "true");
+    loading.append(Object.assign(document.createElement("span"), { textContent: `Loading ${title}…` }));
     const frame = document.createElement("iframe");
     frame.src = src;
     frame.title = `${title} demo`;
