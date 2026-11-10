@@ -21,7 +21,7 @@ Plain HTML, CSS and a few lines of JS. No framework and no build step.
 - `assets/mohammed-sherin-cv.pdf`: the CV the page links to; replace the file to update it
 - `archive/`: earlier designs (2D VHS, 3D store, the first one-page "programme" layout) and retired demos (Ringlog, Language Sort)
 
-openMinistry, Bingely and AreYouFreeYet are embedded straight from their live sites.
+openMinistry, Bingely, AreYouFreeYet and Dear You are embedded straight from their live sites.
 
 ## Run locally
 
